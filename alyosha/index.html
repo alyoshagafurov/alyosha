@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Алишер Гафуров — Ваш фронтенд разработчик</title>
+  <title>IT - alyosha Front-end разработчик</title>
   <meta name="description" content="Делаю быстрые сайты-портфолио и визитки на HTML, CSS, JS. Заказать сайт в Telegram: @alishergafurovv">
   <meta name="theme-color" content="#0b0d13">
 
@@ -797,19 +797,6 @@
   </div>
 </section>
 
-    <!-- PORTFOLIO SLIDER -->
-    <section id="portfolio" class="section">
-      <div class="container">
-        <h2 data-reveal>Портфолио</h2>
-        <p class="sub" data-reveal>Кликайте на проект — это демо-сайты показываюшие мой уровень.</p>
-        <div class="portfolio-slider" data-reveal style="transition-delay:.08s">
-          <button class="slider-btn left" aria-label="Предыдущие">&#8592;</button>
-          <div class="slider-track"></div>
-          <button class="slider-btn right" aria-label="Следующие">&#8594;</button>
-        </div>
-      </div>
-    </section>
-
     <!-- ABOUT BLOCK NEW (1 col, center, small photo) -->
     <section id="about" class="section">
       <div class="container about-onecol">
@@ -946,59 +933,6 @@
         burger.classList.remove('active');
       }
     });
-
-    // === Portfolio Slider ===
-    const works = [
-      {
-        img: 'myW/myW1.png',
-        title: 'Одностраничное портфолио на HTML',
-        tags: ['UI', 'HTML', 'CSS', 'JS'],
-        url: 'https://alyosha-page.netlify.app'
-      },
-      {
-        img: 'myW/myW2.png',
-        title: 'Вёрстка сайта под ключ',
-        tags: ['Дизайн', 'Адаптив', 'Frontend'],
-        url: 'https://alyosha-coffee.netlify.app/#top'
-      },
-      {
-        img: 'myW/myW3.png',
-        title: 'Fron-end разработчик',
-        tags: ['Личный сайт', 'Анимация', 'JS'],
-        url: 'https://alyosha-ai.netlify.app'
-      },
-      {
-        img: 'myW/myW4.png',
-        title: 'Верстка сайта под ключ',
-        tags: ['Анимации', 'UI', 'SCSS'],
-        url: 'https://computer-club-alyosha.netlify.app'
-      },
-      {
-        img: 'myW/myW5.png',
-        title: 'Плавные анимации и эффекты',
-        tags: ['Сайт кафе', 'Мобильная адаптация'],
-        url: 'https://animation-alyosha.netlify.app'
-      },
-      {
-        img: 'myW/myW6.png',
-        title: 'Вёрстка сайтов которую хочется скролить',
-        tags: ['Landing', 'Интерактив'],
-        url: 'https://verstka-alyosh.netlify.app'
-      },
-      {
-        img: 'myW/myW7.png',
-        title: 'Визитки — быстрые сайты для бизнеса',
-        tags: ['Бизнес', 'Визитка', 'Скорость'],
-        url: 'https://visitki-alyosha.netlify.app'
-      },
-      {
-        img: 'myW/myW8.png',
-        title: 'Правка сайтов и код клиента на HTML/CSS/JS',
-        tags: ['Бизнес', 'Визитка', 'Скорость'],
-        url: 'https://alyosha-fixing-pages.netlify.app'
-      },
-    ];
-
     let start = 0;
     const track = document.querySelector('.slider-track');
 
