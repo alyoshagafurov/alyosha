@@ -1,1 +1,835 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Портфолио — IT - alyosha Front-end разработчик</title>
+  <meta name="description" content="Портфолио IT - alyosha: сайты-визитки, лендинги и интерфейсы на HTML, CSS и JavaScript.">
+  <meta name="theme-color" content="#0b0d13">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+
+    body {
+      font-family: 'Inter', ui-sans-serif, Arial, sans-serif;
+      background: #020617;
+      color: #e8ecf1;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    :root{
+      --bg-0:#020617;
+      --bg-1:#0b1120;
+      --panel:#141822;
+      --brand-1:#7c3aed;
+      --brand-2:#06b6d4;
+      --brand-3:#22c55e;
+      --line:rgba(255,255,255,0.08);
+      --muted:#a0a8b8;
+      --text:#e8ecf1;
+      --radius:16px;
+    }
+
+    a{text-decoration:none;color:inherit;}
+    img{display:block;max-width:100%;height:auto;}
+    .container{width:min(1080px,94vw);margin:0 auto;}
+
+    /* ФОН */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background-image: url("bg-circuit.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      filter: brightness(0.9);
+    }
+
+    .orbs {
+      position: fixed;
+      z-index: -2;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(85px);
+      opacity: 0.28;
+      mix-blend-mode: screen;
+    }
+    .orb.o1 {
+      width: 46vw;
+      height: 46vw;
+      left: -12%;
+      top: -10%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.9), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(56, 189, 248, 0.7), transparent 70%);
+      animation: floatOrb1 18s ease-in-out infinite alternate;
+    }
+    .orb.o2 {
+      width: 50vw;
+      height: 50vw;
+      right: -16%;
+      bottom: -10%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.85), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.7), transparent 70%);
+      animation: floatOrb2 22s ease-in-out infinite alternate;
+    }
+    .orb.o3 {
+      width: 60vw;
+      height: 60vw;
+      left: 55%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      background:
+        radial-gradient(circle, rgba(148, 163, 184, 0.35), transparent 70%);
+      opacity: 0.20;
+      filter: blur(95px);
+      animation: pulseGlow 16s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatOrb1 {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(30px, 40px, 0) scale(1.05); }
+      100% { transform: translate3d(-25px, 10px, 0) scale(0.98); }
+    }
+    @keyframes floatOrb2 {
+      0%   { transform: translate3d(0, 0, 0) scale(1); }
+      50%  { transform: translate3d(-40px, -30px, 0) scale(1.06); }
+      100% { transform: translate3d(20px, -10px, 0) scale(0.97); }
+    }
+    @keyframes pulseGlow {
+      0%   { opacity: 0.12; transform: translate(-50%, -50%) scale(0.95); }
+      50%  { opacity: 0.26; transform: translate(-50%, -50%) scale(1.06); }
+      100% { opacity: 0.18; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* HEADER */
+    header.site {
+      position:sticky; top:18px; z-index:10;
+      background:rgba(10,13,26,0.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      backdrop-filter: blur(18px);
+      box-shadow:0 12px 40px rgba(15,23,42,0.85);
+      margin:22px auto 0; width:min(1080px,94vw);
+      padding:0;
+    }
+    .nav { display:flex; align-items: center; justify-content: space-between; padding:15px 18px;}
+    .brand { display: flex;align-items:center;font-weight:900;font-size:18px; letter-spacing:0.4px; gap:12px;}
+    .brand-badge {
+      width:46px;height:46px;border-radius:12px;position:relative;
+      box-shadow:0 4px 18px rgba(124,58,237,0.35);
+    }
+    .brand-badge::after{
+      content:"AG";position:absolute;inset:0;display:grid;place-items:center;
+      color:#181825;font-size:13px;font-weight:900;letter-spacing:1px;
+    }
+    .menu { display: flex; gap: 20px;}
+    .menu a { color: var(--muted); padding:6px 12px; border-radius:8px; transition: color .16s, background .16s;}
+    .menu a:hover { color: var(--text); background:rgba(255,255,255,0.04);}
+    .burger {
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      width:40px; height:40px;
+      gap:6px;
+      background:transparent; border:none; cursor:pointer;
+      z-index:100;
+      margin-left:auto;
+    }
+    .burger span {
+      width:26px; height:3px; border-radius:2px;
+      background:#a0a8b8;
+      transition:.3s;
+    }
+    .burger.active span:nth-child(1){transform:rotate(43deg) translateY(7px);}
+    .burger.active span:nth-child(2){opacity:0;}
+    .burger.active span:nth-child(3){transform:rotate(-43deg) translateY(-7px);}
+
+    /* ОБЩИЕ СЕКЦИИ */
+    .section { padding: clamp(30px,8vw,65px) 0;position:relative;}
+    .section h2 {font-size:clamp(23px,3vw,32px); letter-spacing:-.2px;font-weight:800;text-align:center;}
+    .sub { color: var(--muted);margin-bottom:22px;max-width:70ch;margin-left:auto;margin-right:auto;text-align:center;}
+
+    .kicker {
+      display:inline-block;
+      margin-bottom:18px;
+      font-size:14px;
+      padding:6px 15px;
+      color:var(--muted);
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(15,23,42,0.7);
+      box-shadow:0 12px 30px rgba(15,23,42,0.9);
+    }
+    .hero-centered {
+      text-align:center;
+      max-width:780px;
+      margin:0 auto;
+    }
+    .h1 {
+      font-size:clamp(32px,7vw,46px); line-height:1.08; font-weight:900;
+      background: linear-gradient(93deg,#ffffff,#7dd3fc 52%,#d8b4fe 99%);
+      -webkit-background-clip: text; background-clip:text; color:transparent;
+      margin:0 0 13px;
+    }
+    .lead {
+      color: #c7d5ec;
+      font-size:clamp(16px,2vw,19px);
+      max-width:56ch;
+      margin:0 auto 24px;
+    }
+    .hero-actions{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .btn {
+      display:inline-flex;align-items:center;gap:8px;
+      border-radius:13px;
+      padding:11px 19px;
+      background:rgba(15,23,42,0.9);
+      font-weight:700;
+      border:1px solid var(--line);
+      transition:.16s;
+      color:#e5e7eb;
+    }
+    .btn.primary {
+      background:linear-gradient(120deg,#4c1d95,#1d4ed8,#0ea5e9);
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow:
+        0 12px 32px rgba(30,64,175,0.7),
+        0 0 30px rgba(59,130,246,0.7);
+    }
+    .btn:hover { transform:translateY(-1.5px); background: rgba(15,23,42,1);}
+    .btn.primary:hover {
+      background:linear-gradient(120deg,#6d28d9,#2563eb,#22d3ee);
+    }
+
+    /* БЛОК "КАК Я РАБОТАЮ" */
+    .steps-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .step-card{
+      background:rgba(15,23,42,0.9);
+      border-radius:14px;
+      border:1px solid var(--line);
+      padding:18px 16px;
+      box-shadow:0 6px 24px rgba(15,23,42,0.9);
+    }
+    .step-num{
+      width:28px;height:28px;
+      display:grid;place-items:center;
+      border-radius:7px;
+      margin-bottom:10px;
+      font-size:14.6px;font-weight:800;
+      background:linear-gradient(135deg,#7c3aed,#06b6d4);
+      color:#181622;
+    }
+    .step-title{font-weight:700;margin-bottom:6px;}
+    .step-text{font-size:14.2px;color:var(--muted);}
+
+    /* СЕТКА РАБОТ */
+    .works-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+    .work-card{
+      background:linear-gradient(180deg,rgba(15,23,42,0.95),rgba(15,23,42,0.85));
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 10px 14px;
+      box-shadow:0 7px 32px rgba(15,23,42,0.95);
+      transition:.18s;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .work-card:hover{
+      transform:translateY(-3px);
+      border-color:rgba(124,58,237,0.45);
+      background:rgba(15,23,42,1);
+    }
+    .work-thumb{
+      border-radius:10px;
+      overflow:hidden;
+      aspect-ratio:16/9;
+      background:#111827;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#9ca3af;
+      font-weight:600;
+      font-size:14px;
+    }
+    .work-thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .work-title{
+      font-weight:700;
+      font-size:17px;
+      margin-top:2px;
+    }
+    .work-desc{
+      font-size:14px;
+      color:var(--muted);
+    }
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:6px;
+    }
+    .tag{
+      font-size:12px;
+      color:var(--muted);
+      padding: 4px 8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(15,23,42,1);
+    }
+    .work-links{
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      font-size:13px;
+    }
+    .work-links a{
+      color:#93c5fd;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+    }
+
+    /* БЛОК "ЧТО ПОЛУЧАЕТ КЛИЕНТ" */
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .benefit{
+      background:rgba(15,23,42,0.9);
+      border-radius:14px;
+      border:1px solid var(--line);
+      padding:16px 14px;
+    }
+    .benefit-title{font-weight:700;margin-bottom:6px;}
+    .benefit-text{font-size:14px;color:var(--muted);}
+
+    /* БЛОК "КАК МЕНЯ НАЙТИ" */
+    .contact-panel{
+      max-width:780px;
+      margin:0 auto;
+      padding:24px 22px 20px;
+      background:
+        radial-gradient(140% 140% at 0% 0%,rgba(124,58,237,0.3),transparent 68%),
+        radial-gradient(120% 120% at 100% 100%,rgba(6,182,212,0.26),transparent 55%),
+        rgba(15,23,42,0.95);
+      border-radius:18px;
+      border:1px solid var(--line);
+      box-shadow:0 8px 32px rgba(6,182,212,0.3);
+      text-align:center;
+    }
+    .contact-panel h2{
+      margin-bottom:8px;
+    }
+    .contact-panel p{
+      color:#c4cad6;
+      margin-bottom:16px;
+      font-size:15px;
+    }
+    .contact-links{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    footer{padding:23px 0 36px;color:var(--muted);}
+    .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .foot .links{display:flex;gap:14px;}
+
+    #Tg:hover{filter: drop-shadow(0 5px 5px rgba(0, 98, 255, 0.895));}
+    #Insta:hover{filter: drop-shadow(0 5px 5px rgba(187, 10, 215, 0.895));}
+    #YouTube:hover{filter: drop-shadow(5px 5px 10px rgba(255, 0, 0, 0.895));}
+
+    [data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s;}
+    [data-reveal].is-visible{opacity:1;transform:translateY(0);}
+    :focus-visible{outline:2px solid #06b6d4ba;outline-offset:2px;border-radius:7px;}
+
+    /* АДАПТИВ */
+    @media (max-width:1024px){
+      .container {width:96vw;}
+    }
+    @media (max-width:900px){
+      .steps-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .works-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .benefits-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+    @media (max-width:600px){
+      header.site {
+        min-width:100vw;
+        margin:0;
+        border-radius:0 0 12px 12px;
+      }
+      .container{
+        width:100vw;
+        padding:0 5vw;
+      }
+      .nav{
+        padding:7px 0;
+      }
+      .container.nav{
+        width:100vw;
+        padding:0 5vw;
+      }
+      .burger{display:flex;}
+      .menu{
+        position: fixed;
+        top: 68px; right: 16px;
+        background: #141822;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        flex-direction: column;
+        gap: 0;
+        min-width: 160px;
+        padding: 8px 0;
+        box-shadow:0 10px 30px #0007;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px) scale(0.97);
+        transition: .2s;
+        z-index: 99;
+      }
+      .menu.open {
+        opacity:1;
+        pointer-events: auto;
+        transform: none;
+      }
+      .menu a {
+        padding: 8px 0;
+        font-size: 16px;
+        border-bottom: 1px solid var(--line);
+        display: block;
+        text-align: center;
+      }
+      .menu a:last-child {border-bottom:none;}
+
+      .steps-grid,
+      .works-grid,
+      .benefits-grid{
+        grid-template-columns:1fr;
+      }
+      .orb{filter:blur(65px);opacity:0.23;}
+      .btn,
+      .btn.primary{
+        width:80%;
+        justify-content:center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="orbs">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site">
+    <div class="container nav">
+      <a class="brand" href="index.html" aria-label="На главную">
+        <img class="brand-badge" src="IT - alyosha.png" alt="logo"><span>IT - alyosha</span>
+      </a>
+      <nav class="menu" aria-label="Навигация">
+        <a href="index.html#services">Услуги</a>
+        <a href="portfolio.html">Портфолио</a>
+        <a href="visitki.html">Визитки</a>
+        <a href="index.html#about">Обо мне</a>
+        <a href="index.html#process">Процесс</a>
+        <a href="index.html#faq">FAQ</a>
+      </nav>
+      <button class="burger" aria-label="Открыть меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO: О ПОРТФОЛИО -->
+    <section class="section">
+      <div class="container hero-centered">
+        <span class="kicker" data-reveal>Мои работы на HTML • CSS • JavaScript</span>
+        <h1 class="h1" data-reveal style="transition-delay:.05s">
+          Портфолио IT - alyosha
+        </h1>
+        <p class="lead" data-reveal style="transition-delay:.1s">
+          Здесь собраны сайты‑визитки, лендинги и простые интерфейсы, которые я сверстал с нуля.
+          Без конструкторов, с упором на скорость, аккуратную вёрстку и понятную структуру.
+        </p>
+        <div class="hero-actions" data-reveal style="transition-delay:.15s">
+          <a class="btn primary" href="https://t.me/alishergafurovv" target="_blank" rel="noopener">
+            Обсудить ваш проект
+          </a>
+          <a class="btn" href="index.html">
+            На главную
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- КАК Я ДЕЛАЮ САЙТЫ -->
+    <section class="section" id="how-i-work">
+      <div class="container">
+        <h2 data-reveal>Как я делаю сайты</h2>
+        <p class="sub" data-reveal style="transition-delay:.05s">
+          Работаю по понятному и прозрачному процессу: от сборов задач до поддержки после запуска.
+        </p>
+        <div class="steps-grid" data-reveal style="transition-delay:.1s">
+          <article class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-title">Анализ и структура</div>
+            <div class="step-text">
+              Узнаю, чем вы занимаетесь и кому продаёте. Собираю блоки и логику страницы, чтобы сайт решал нужную задачу.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-title">Визуальный стиль</div>
+            <div class="step-text">
+              Подбираю цвета, шрифты, сетку и анимации, чтобы сайт выглядел современно и аккуратно.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-title">Вёрстка и анимации</div>
+            <div class="step-text">
+              Ручная вёрстка HTML, CSS и JavaScript. Адаптив под разные экраны, плавные эффекты без перегруза.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-title">Оптимизация</div>
+            <div class="step-text">
+              Работаю над скоростью загрузки, Lighthouse, читаемостью кода и удобством дальнейших доработок.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-num">5</div>
+            <div class="step-title">Запуск</div>
+            <div class="step-text">
+              Помогаю с доменом, хостингом, загрузкой файлов и базовыми настройками проекта.
+            </div>
+          </article>
+          <article class="step-card">
+            <div class="step-num">6</div>
+            <div class="step-title">Поддержка</div>
+            <div class="step-text">
+              Исправляю баги, вношу небольшие правки и могу масштабировать сайт по мере роста ваших задач.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- МОИ РАБОТЫ (9 КАРТОЧЕК) -->
+    <section class="section" id="works">
+      <div class="container">
+        <h2 data-reveal>Мои работы</h2>
+        <p class="sub" data-reveal style="transition-delay:.05s">
+          Ниже я оставил свои предыдушие работы - можете посмотреть на мои работы.
+        </p>
+
+        <div class="works-grid" data-reveal style="transition-delay:.1s">
+          <!-- 1 -->
+          <article class="work-card">
+            <a href="site1.html" target="_blank" class="work-thumb">
+              <!-- Заменишь на реальный скрин -->
+              <img src="portfolio/site1-preview.jpg" alt="Название проекта 1">
+            </a>
+            <div class="work-title">Исправка и доработка сайта</div>
+            <div class="work-desc">
+              Исправляю и доработаю ваш сайт до превосходства, найду ошибки и исправлю.
+            </div>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Адаптив</span>
+            </div>
+            <div class="work-links">
+              <a href="site1.html" target="_blank" rel="noopener">Открыть сайт</a>
+              <span>2024</span>
+            </div>
+          </article>
+
+          <!-- 2 -->
+          <article class="work-card">
+            <a href="site2.html" target="_blank" class="work-thumb">
+              <img src="portfolio/site2-preview.jpg" alt="Название проекта 2">
+            </a>
+            <div class="work-title">Современные анимации и эффекты</div>
+            <div class="work-desc">
+              Добавлю анимации, эффекты, паралаксы, ховеры и тд на ваш сайт сделав его современнее.
+            </div>
+            <div class="tags">
+              <span class="tag">Лендинг</span>
+              <span class="tag">UI‑анимации</span>
+              <span class="tag">Responsive</span>
+            </div>
+            <div class="work-links">
+              <a href="site2.html" target="_blank" rel="noopener">Открыть сайт</a>
+              <span>2024</span>
+            </div>
+          </article>
+
+          <!-- 3 -->
+          <article class="work-card">
+            <a href="site3.html" target="_blank" class="work-thumb">
+              <img src="portfolio/site3-preview.jpg" alt="Название проекта 3">
+            </a>
+            <div class="work-title">Верстка сайта с нуля</div>
+            <div class="work-desc">
+              Сделаю верстку сайта с нуля, дизайн и стиль сам подберу под баши ниши.
+            </div>
+            <div class="tags">
+              <span class="tag">С нуля</span>
+              <span class="tag">Быстро</span>
+            </div>
+            <div class="work-links">
+              <a href="site3.html" target="_blank" rel="noopener">Открыть сайт</a>
+              <span>2023</span>
+            </div>
+          </article>
+
+          <!-- 4 -->
+          <article class="work-card">
+            <a href="site4.html" target="_blank" class="work-thumb">
+              <img src="portfolio/site4-preview.jpg" alt="Название проекта 4">
+            </a>
+            <div class="work-title">Front-end разработчик</div>
+            <div class="work-desc">
+              Сделаю всё что связанно с фронтендом, не зависимо что это.
+            </div>
+            <div class="tags">
+              <span class="tag">Landing</span>
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">JS</span>
+            </div>
+            <div class="work-links">
+              <a href="site4.html" target="_blank" rel="noopener">Открыть сайт</a>
+              <span>2023</span>
+            </div>
+          </article>
+
+          <!-- 5 -->
+          <article class="work-card">
+            <a href="site5.html" target="_blank" class="work-thumb">
+              <img src="portfolio/site5-preview.jpg" alt="Название проекта 5">
+            </a>
+            <div class="work-title">Вёрстка сайта под ключ</div>
+            <div class="work-desc">
+              Сайт‑портфолио с несколькими разделами: работы, обо мне, стек, контакты, под ключ.
+            </div>
+            <div class="tags">
+              <span class="tag">Портфолио</span>
+              <span class="tag">Многостраничный</span>
+            </div>
+            <div class="work-links">
+              <a href="site5.html" target="_blank" rel="noopener">Открыть сайт</a>
+              <span>2023</span>
+            </div>
+          </article>
+
+          <!-- 6 -->
+          <article class="work-card">
+            <a href="site6.html" target="_blank" class="work-thumb">
+              <img src="portfolio/site6-preview.jpg" alt="Название проекта 6">
+            </a>
+            <div class="work-title">Портфолио</div>
+            <div class="work-desc">
+              Одностраничные портфолио за 24час, современный дизайн и красивый интерфейс.
+            </div>
+            <div class="tags">
+              <span class="tag">UI</span>
+              <span class="tag">UX</span>
+              <span class="tag">JS</span>
+            </div>
+            <div class="work-links">
+              <a href="site6.html" target="_blank" rel="noopener">Открыть сайт</a>
+              <span>2022</span>
+            </div>
+          </article>
+
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ЧТО ПОЛУЧАЕТ КЛИЕНТ -->
+    <section class="section" id="benefits">
+      <div class="container">
+        <h2 data-reveal>Что вы получаете, работая со мной</h2>
+        <p class="sub" data-reveal style="transition-delay:.05s">
+          Не только красивый сайт, но и понятный результат: скорость, структура, удобство поддержки.
+        </p>
+        <div class="benefits-grid" data-reveal style="transition-delay:.1s">
+          <article class="benefit">
+            <div class="benefit-title">Чистый и понятный код</div>
+            <div class="benefit-text">
+              Вёрстка без «магии» и лишних зависимостей. Любой разработчик после вас разберётся, что и где.
+            </div>
+          </article>
+          <article class="benefit">
+            <div class="benefit-title">Адаптив под устройства</div>
+            <div class="benefit-text">
+              Сайт корректно смотрится на телефонах, планшетах и десктопах. Проверяю ключевые разрешения.
+            </div>
+          </article>
+          <article class="benefit">
+            <div class="benefit-title">Высокая скорость загрузки</div>
+            <div class="benefit-text">
+              Оптимизирую картинки, шрифты и структуру, чтобы страницы открывались быстро.
+            </div>
+          </article>
+          <article class="benefit">
+            <div class="benefit-title">Удобная структура</div>
+            <div class="benefit-text">
+              Логичная иерархия блоков, акценты и CTA — всё для того, чтобы пользователю было просто.
+            </div>
+          </article>
+          <article class="benefit">
+            <div class="benefit-title">Поддержка после сдачи</div>
+            <div class="benefit-text">
+              Несколько дней после запуска помогаю с исправлениями и доработками без лишней бюрократии.
+            </div>
+          </article>
+          <article class="benefit">
+            <div class="benefit-title">Готовность к росту</div>
+            <div class="benefit-text">
+              Структура и код позволяют дописывать новые блоки и страницы без полного переписывания проекта.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- КАК МЕНЯ НАЙТИ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-panel" data-reveal>
+          <h2>Как со мной связаться</h2>
+          <p>
+            Пишите в удобный вам мессенджер или на фриланс‑площадку. 
+            Кратко опишите задачу, пришлите примеры и желаемые сроки — я отвечу и предложу варианты решения.
+          </p>
+          <div class="contact-links">
+            <a class="btn primary" href="https://t.me/alishergafurovv" target="_blank" rel="noopener">
+              Telegram: @alishergafurovv
+            </a>
+            <a class="btn" href="https://kwork.ru/user/gafurovalyosha" target="_blank" rel="noopener">
+              KWORK: @gafurovalyosha
+            </a>
+            <a class="btn" href="mailto:example@mail.com">
+              Написать на email
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Алишер Гафуров</div>
+      <div class="links">
+        <a id="Tg" href="https://t.me/alishergafurovv" aria-label="Telegram" title="Telegram" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M21.5 4.5L3.9 11.4c-.9.35-.88 1.66.03 1.97l4.3 1.53c.37.13.78.07 1.1-.16l6.65-4.7c.17-.12.36.1.22.26l-4.82 5.62c-.25.3-.2.75.12.98l3.8 2.66c.56.39 1.33.1 1.5-.56l3.55-13.38c.2-.76-.52-1.43-1.35-1.22Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a id="Insta" href="https://www.instagram.com/alishergafurovv/" aria-label="Instagram" title="Instagram" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+          </svg>
+        </a>
+        <a id="YouTube" href="#" aria-label="YouTube" title="YouTube" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <rect x="2.5" y="6.5" width="19" height="11" rx="3" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M10 9.5l5 3-5 3v-6Z" fill="currentColor"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.13, rootMargin: "0px 0px -44px 0px" });
+    revealEls.forEach(el => io.observe(el));
+
+    // Год в подвале
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Гамбургер-меню
+    const burger = document.querySelector('.burger');
+    const menu = document.querySelector('.menu');
+    burger.onclick = (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+      burger.classList.toggle('active');
+    };
+    document.body.addEventListener('click', e => {
+      if(window.innerWidth < 800 && menu.classList.contains('open') &&
+        !menu.contains(e.target) && !burger.contains(e.target)){
+        menu.classList.remove('open');
+        burger.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
 
