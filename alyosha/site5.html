@@ -1,1 +1,480 @@
 
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IronCoach — персональный тренер</title>
+  <meta name="description" content="Персональные тренировки, программы под цель, питание и контроль результата. Без воды и мифов." />
+  <meta name="theme-color" content="#0c0d10" />
+  <meta property="og:title" content="IronCoach — персональный тренер">
+  <meta property="og:description" content="Силовые, набор массы, сушка. Запишись на пробную тренировку.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://loremflickr.com/1600/900/gym,barbell,fitness?lock=11">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+  :root{
+  --bg-900:#0c0d10;
+  --bg-800:#111217;
+  --bg-700:#141720;
+  --ink:#e8e9ec;
+  --muted:#9aa0a6;
+  --accent:#ff4d4d; /* красный неон */
+  --accent-2:#ff7b59;
+  --card:#171a20;
+  --border:rgba(255,255,255,.08);
+  --shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background: radial-gradient(1200px 800px at 80% -10%, rgba(255,77,77,.07), transparent 60%), linear-gradient(180deg, var(--bg-900), var(--bg-800));
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  line-height:1.6;
+}
+
+img{max-width:100%;display:block}
+.container{width:min(1160px,92%);margin-inline:auto}
+
+.header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(12,13,16,.6);
+  backdrop-filter:saturate(140%) blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 0}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:.5px}
+.logo__accent{color:var(--accent)}
+.nav__toggle{display:none;flex-direction:column;gap:5px;background:0;border:0;padding:6px;cursor:pointer}
+.nav__toggle span{width:24px;height:2px;background:var(--ink)}
+.nav__list{display:flex;gap:24px;list-style:none;margin:0;padding:0}
+.nav__list a{color:var(--ink);text-decoration:none;opacity:.85;font-weight:600}
+.nav__list a:hover{color:var(--accent)}
+.header__cta{display:none}
+@media (min-width:860px){.header__cta{display:inline-flex}}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;border-radius:10px;padding:12px 18px;text-decoration:none;
+  font-weight:700;border:1px solid transparent;cursor:pointer;transition:.25s ease;
+}
+.btn--primary{
+  color:#0c0d10;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow: var(--shadow);
+}
+.btn--primary:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.btn--ghost{
+  color:var(--ink);background:rgba(255,77,77,.08);border-color:rgba(255,77,77,.25)
+}
+.btn--ghost:hover{background:rgba(255,77,77,.14)}
+.btn--sm{padding:10px 14px;border-radius:8px;font-size:14px}
+
+.hero{position:relative;min-height:78vh;display:grid;place-items:center;overflow:hidden}
+.hero__bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  transform:scale(1.02);
+  background-image:
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.65)),
+    url('https://loremflickr.com/2000/1200/gym,barbell,fitness?lock=11');
+}
+
+.hero__noise{
+  position:absolute;inset:0;opacity:.15;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.5"/></svg>');
+  pointer-events:none;
+}
+.hero__shade{position:absolute;inset:auto 0 0 0;height:120px;background:linear-gradient(180deg,transparent,var(--bg-800))}
+.hero__content{position:relative;z-index:1;text-align:center;padding:80px 0 120px}
+.hero__badge{
+  display:inline-block;background:rgba(255,77,77,.12);border:1px solid rgba(255,77,77,.35);
+  padding:6px 12px;border-radius:999px;font-weight:700;letter-spacing:.8px;margin-bottom:14px;text-transform:uppercase;
+  font-family:'Rajdhani',sans-serif
+}
+.hero__title{
+  font-family:'Bebas Neue',sans-serif;letter-spacing:1px;
+  font-size:clamp(40px,7vw,72px);margin:10px 0 8px;line-height:1.05
+}
+.hero__subtitle{opacity:.92;margin:0 0 22px;font-size:clamp(16px,2.5vw,18px)}
+.hero__actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero__meta{opacity:.75;margin-top:14px;font-size:14px}
+
+.section{padding:80px 0}
+.section__title{
+  font-family:'Bebas Neue',sans-serif;letter-spacing:.6px;
+  font-size:clamp(28px,4.5vw,40px);margin:0 0 10px;color:#fff
+}
+.section__subtitle{color:var(--muted);margin:0 0 32px}
+.center{text-align:center}
+
+.about__inner{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.about__image img{border-radius:16px;box-shadow:var(--shadow)}
+.about__features{margin:16px 0 20px;padding-left:18px}
+.about__features li{margin:6px 0}
+.about__stats{display:flex;gap:22px;margin-top:8px;color:var(--ink)}
+.about__stats strong{display:block;font-size:22px;font-family:'Rajdhani',sans-serif}
+.about__stats span{font-size:12px;color:var(--muted)}
+@media (max-width:900px){.about__inner{grid-template-columns:1fr;gap:22px}}
+
+.programs{background:linear-gradient(180deg,var(--bg-800),var(--bg-700))}
+.programs__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media (max-width:860px){.programs__grid{grid-template-columns:1fr}}
+.p-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.p-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.p-card__media{aspect-ratio:16/9;background-image:var(--bg);background-size:cover;background-position:center}
+.p-card__body{padding:16px 16px 14px}
+.p-card__body h3{margin:0 0 6px;font-family:'Rajdhani',sans-serif;letter-spacing:.3px}
+.p-card__body p{margin:0 0 12px;color:var(--muted)}
+.p-card__meta{display:flex;justify-content:space-between;align-items:center}
+.price{font-weight:800;color:var(--accent)}
+
+.results{background:linear-gradient(180deg,var(--bg-800),var(--bg-700))}
+.results__grid{columns:3 280px;column-gap:16px}
+.before-after{
+  break-inside:avoid;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px
+}
+.before-after img{width:100%;height:auto;display:block}
+.before-after figcaption{padding:10px 12px;color:var(--muted);font-size:14px}
+
+.reviews{background:linear-gradient(180deg,var(--bg-700),var(--bg-800))}
+.reviews__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media (max-width:900px){.reviews__grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.reviews__grid{grid-template-columns:1fr}}
+.review{background:var(--card);border-left:4px solid var(--accent);padding:18px;border-radius:12px;box-shadow:var(--shadow);border-top:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.review p{margin:0 0 10px}
+.review footer{color:var(--muted);font-size:14px}
+
+.contact{background:linear-gradient(180deg,var(--bg-800),var(--bg-900))}
+.contact__inner{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media (max-width:860px){.contact__inner{grid-template-columns:1fr}}
+.contact__hours{list-style:none;padding:0;margin:12px 0;color:var(--muted)}
+.contact__social{display:flex;gap:10px;margin-top:10px}
+.social{color:#0c0d10;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;font-weight:800}
+.social:hover{filter:brightness(1.05)}
+.contact__form{
+  background:var(--card);border:1px solid var(--border);padding:18px;border-radius:14px;box-shadow:var(--shadow)
+}
+.contact__form h3{margin:0 0 10px;font-family:'Rajdhani',sans-serif}
+.contact__form label{display:block;font-weight:600;margin:12px 0 6px}
+.contact__form input,.contact__form select,.contact__form textarea{
+  width:100%;padding:12px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#0f1116;color:var(--ink);font:inherit
+}
+.contact__form input:focus,.contact__form select:focus,.contact__form textarea:focus{
+  outline:none;border-color:rgba(255,77,77,.6);box-shadow:0 0 0 3px rgba(255,77,77,.12)
+}
+.form__note{color:var(--muted);font-size:12px;margin-top:8px}
+
+.footer{border-top:1px solid var(--border);background:var(--bg-900)}
+.footer__inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;flex-wrap:wrap}
+.footer p{margin:0;color:var(--muted)}
+.to-top{color:var(--accent);text-decoration:none;font-weight:800}
+
+.fab{
+  position:fixed;right:16px;bottom:16px;width:44px;height:44px;border-radius:50%;
+  border:0;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#0c0d10;font-size:18px;box-shadow:var(--shadow);display:none;cursor:pointer
+}
+.fab:hover{transform:translateY(-2px)}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease}
+.reveal.is-visible{opacity:1;transform:none}
+
+/* Mobile nav */
+@media (max-width:860px){
+  .nav__toggle{display:flex}
+  .nav__list{
+    position:fixed;inset:58px 0 auto 0;background:rgba(12,13,16,.98);
+    flex-direction:column;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border);
+    transform:translateY(-120%);transition:transform .25s ease;
+  }
+  .nav__list.is-open{transform:translateY(0)}
+}
+
+</style>
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="logo" href="#">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 14h18M6 10h12M8 6h8" />
+        </svg>
+        <span>IRON<span class="logo__accent">COACH</span></span>
+      </a>
+      <nav class="nav" aria-label="Навигация">
+        <button class="nav__toggle" aria-expanded="false" aria-controls="nav-list" aria-label="Меню">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-list" class="nav__list">
+          <li><a href="#about">О тренере</a></li>
+          <li><a href="#programs">Программы</a></li>
+          <li><a href="#results">Результаты</a></li>
+          <li><a href="#reviews">Отзывы</a></li>
+          <li><a href="#contact">Контакты</a></li>
+        </ul>
+      </nav>
+      <a href="#contact" class="btn btn--primary header__cta">Записаться</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__bg" role="img" aria-label="Тренировка со штангой"></div>
+    <div class="hero__noise" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <div class="hero__badge">Train hard. Stay consistent.</div>
+      <h1 class="hero__title">Сильнее. Быстрее. Выносливее.</h1>
+      <p class="hero__subtitle">Персональные тренировки, план питания и контроль прогресса. Старт — с тест‑тренировки.</p>
+      <div class="hero__actions">
+        <a href="#programs" class="btn btn--primary">Выбрать программу</a>
+        <a href="#contact" class="btn btn--ghost">Записаться</a>
+      </div>
+      <div class="hero__meta">
+        <span>10+ лет в фитнесе</span><span>•</span><span>300+ клиентов</span><span>•</span><span>ТРЦ “Атлет”, зал #3</span>
+      </div>
+    </div>
+    <div class="hero__shade"></div>
+  </section>
+
+  <section id="about" class="section about">
+    <div class="container about__inner">
+      <div class="about__image reveal">
+        <img loading="lazy" referrerpolicy="no-referrer"
+             src="https://loremflickr.com/1400/900/dumbbell,weights,gym?lock=12"
+             alt="Гантели в тренажерном зале">
+      </div>
+      <div class="about__content reveal">
+        <h2 class="section__title">О тренере</h2>
+        <p>Я — IronCoach. Помогаю набрать массу, подсушиться и укрепить силовые. Безопасная техника, прогрессия нагрузок и понятные планы — без лишнего.</p>
+        <ul class="about__features">
+          <li><strong>Индивидуально</strong> под цели, уровень и расписание</li>
+          <li><strong>Техника</strong> — корректирую и обучаю базовым движениям</li>
+          <li><strong>Питание</strong> — простые рекомендации для результата</li>
+        </ul>
+        <div class="about__stats">
+          <div><strong>10+</strong><span>лет стажа</span></div>
+          <div><strong>300+</strong><span>клиентов</span></div>
+          <div><strong>95%</strong><span>достигают цели</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="programs" class="section programs">
+    <div class="container">
+      <h2 class="section__title center">Программы тренировок</h2>
+      <p class="section__subtitle center">Пробная сессия, диагностика техники и стартовый план.</p>
+      <div class="programs__grid">
+        <article class="p-card reveal">
+          <div class="p-card__media"
+               style="--bg: url('https://loremflickr.com/1400/900/bodybuilding,muscle,training?lock=21')"></div>
+          <div class="p-card__body">
+            <h3>Набор массы</h3>
+            <p>База, прогрессия, питание. Мышечный рост без лишней воды.</p>
+            <div class="p-card__meta">
+              <span class="price">от 3 500 ₽/нед.</span>
+              <a href="#contact" class="btn btn--sm btn--primary">Записаться</a>
+            </div>
+          </div>
+        </article>
+        <article class="p-card reveal">
+          <div class="p-card__media"
+               style="--bg: url('https://loremflickr.com/1400/900/cardio,fitness,gym?lock=22')"></div>
+          <div class="p-card__body">
+            <h3>Сушка / рельеф</h3>
+            <p>Дефицит калорий, силовой каркас и кардио по плану.</p>
+            <div class="p-card__meta">
+              <span class="price">от 3 500 ₽/нед.</span>
+              <a href="#contact" class="btn btn--sm btn--primary">Стартовать</a>
+            </div>
+          </div>
+        </article>
+        <article class="p-card reveal">
+          <div class="p-card__media"
+               style="--bg: url('https://loremflickr.com/1400/900/powerlifting,barbell,squat?lock=23')"></div>
+          <div class="p-card__body">
+            <h3>Силовая подготовка</h3>
+            <p>Присед, жим, тяга — техника, план, восстановление.</p>
+            <div class="p-card__meta">
+              <span class="price">от 4 200 ₽/нед.</span>
+              <a href="#contact" class="btn btn--sm btn--primary">Хочу силу</a>
+            </div>
+          </div>
+        </article>
+        <article class="p-card reveal">
+          <div class="p-card__media"
+               style="--bg: url('https://loremflickr.com/1400/900/personal,trainer,gym?lock=24')"></div>
+          <div class="p-card__body">
+            <h3>Персональные тренировки</h3>
+            <p>1‑на‑1 в зале: корректировка техники и мотивация.</p>
+            <div class="p-card__meta">
+              <span class="price">от 2 000 ₽</span>
+              <a href="#contact" class="btn btn--sm btn--primary">Забронировать</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="results" class="section results">
+    <div class="container">
+      <h2 class="section__title center">Трансформации</h2>
+      <p class="section__subtitle center">Реальные клиенты. Системный подход.</p>
+      <div class="results__grid">
+        <figure class="before-after reveal">
+          <img loading="lazy" referrerpolicy="no-referrer"
+               src="https://loremflickr.com/1200/800/squat,gym,training?lock=31"
+               alt="Силовой прогресс — присед">
+          <figcaption>+25 кг в приседе</figcaption>
+        </figure>
+        <figure class="before-after reveal">
+          <img loading="lazy" referrerpolicy="no-referrer"
+               src="https://loremflickr.com/1200/800/abs,core,workout?lock=32"
+               alt="Тренировка корпуса">
+          <figcaption>‑9 см в талии</figcaption>
+        </figure>
+        <figure class="before-after reveal">
+          <img loading="lazy" referrerpolicy="no-referrer"
+               src="https://loremflickr.com/1200/800/dumbbell,press,gym?lock=33"
+               alt="Работа с гантелями">
+          <figcaption>+15% сила жима</figcaption>
+        </figure>
+        <figure class="before-after reveal">
+          <img loading="lazy" referrerpolicy="no-referrer"
+               src="https://loremflickr.com/1200/800/kettlebell,training,fitness?lock=34"
+               alt="Кеттлбелл тренировка">
+          <figcaption>Выносливость ↑</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" class="section reviews">
+    <div class="container">
+      <h2 class="section__title center">Отзывы</h2>
+      <div class="reviews__grid">
+        <blockquote class="review reveal">
+          <p>За 12 недель — минус 8 кг и правильная техника базовых. Комфортное ведение.</p>
+          <footer>— Игорь</footer>
+        </blockquote>
+        <blockquote class="review reveal">
+          <p>Планы простые и рабочие, постоянная связь. Тело и самочувствие — на уровне.</p>
+          <footer>— Алина</footer>
+        </blockquote>
+        <blockquote class="review reveal">
+          <p>Наконец перестал «зажимать» плечи в жиме. Прогресс стабильно идёт.</p>
+          <footer>— Дмитрий</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact">
+    <div class="container contact__inner">
+      <div class="contact__info reveal">
+        <h2 class="section__title">Контакты</h2>
+        <p>г. Москва, пр-т Силы, 10, зал “Атлет”</p>
+        <p>+7 (900) 000‑00‑00</p>
+        <p>@ironcoach.fit</p>
+        <ul class="contact__hours">
+          <li><strong>Пн–Пт:</strong> 07:00–22:00</li>
+          <li><strong>Сб–Вс:</strong> 09:00–20:00</li>
+        </ul>
+        <div class="contact__social">
+          <a href="#" aria-label="Instagram" class="social">IG</a>
+          <a href="#" aria-label="Telegram" class="social">TG</a>
+          <a href="#" aria-label="VK" class="social">VK</a>
+        </div>
+      </div>
+      <form class="contact__form reveal" onsubmit="return false;">
+        <h3>Заявка на тренировку</h3>
+        <label>Имя
+          <input type="text" name="name" placeholder="Ваше имя" required>
+        </label>
+        <label>Телефон
+          <input type="tel" name="phone" placeholder="+7 ..." required>
+        </label>
+        <label>Цель
+          <select name="goal">
+            <option>Набор массы</option>
+            <option>Сушка</option>
+            <option>Сила</option>
+            <option>Общее здоровье</option>
+          </select>
+        </label>
+        <label>Комментарий
+          <textarea rows="4" name="message" placeholder="Удобное время, опыт, травмы и т.д."></textarea>
+        </label>
+        <button class="btn btn--primary" type="submit">Отправить</button>
+        <p class="form__note">Демо‑форма: подключите почту/телеграм или Netlify Forms.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a class="logo" href="#">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M3 14h18M6 10h12M8 6h8" />
+        </svg>
+        <span>IRON<span class="logo__accent">COACH</span></span>
+      </a>
+      <p>© <span id="year"></span> IronCoach. Сделан Алишером Гафуровом.</p>
+      <a class="to-top" href="#top" aria-label="Наверх">↑</a>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Mobile nav toggle
+const toggle = document.querySelector('.nav__toggle');
+const navList = document.getElementById('nav-list');
+if (toggle && navList) {
+  toggle.addEventListener('click', () => {
+    const isOpen = navList.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  navList.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      navList.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    })
+  );
+}
+
+// Reveal on scroll
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-visible');
+      io.unobserve(e.target);
+    }
+  }),
+  { threshold: 0.12 }
+);
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Footer year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Optional toast helper (на будущее, если понадобится уведомление)
+const toast = document.getElementById('toast');
+function showToast(msg) {
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('is-show');
+  setTimeout(() => toast.classList.remove('is-show'), 2600);
+}
+
+  </script>
+</body>
+</html>
