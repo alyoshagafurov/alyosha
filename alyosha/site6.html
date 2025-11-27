@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Исправлю и доработаю ваш HTML/CSS/JS — быстро и аккуратно</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0f1220; --bg2:#0b0e19;
+  --accent:#63e6ff; --ink:#eaf3ff; --muted:#a7b3c9;
+  --glass:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.16);
+  --ring:rgba(99,230,255,.55);
+  --kwork:#00d37f; /* фирменный для кнопки Kwork */
+}
+*{box-sizing:border-box} html,body{height:100%}
+body{
+  margin:0; color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(1200px 800px at 15% -10%, #1a1f35 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:Manrope,Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.bg-grid{
+  position:fixed; inset:0; pointer-events:none; opacity:.22; z-index:-1;
+  background:
+    repeating-linear-gradient(to right, rgba(255,255,255,.08) 0 1px, transparent 1px 64px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.06) 0 1px, transparent 1px 64px);
+  mask:linear-gradient(#000, transparent 90%);
+}
+.wrap{max-width:1100px; margin:0 auto; padding:22px}
+.header{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:6px 6px 10px;
+}
+.brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px}
+.brand i{
+  width:18px;height:18px;border-radius:6px;
+  background:radial-gradient(circle at 35% 35%, var(--accent), #8b5cf6);
+  box-shadow:0 0 18px var(--ring);
+}
+.btn-sm{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:32px; padding:0 12px; font-weight:800; font-size:12px; letter-spacing:.02em;
+  border-radius:8px; border:1px solid rgba(0,0,0,.08);
+  transition:transform .12s ease, opacity .2s ease, box-shadow .2s ease;
+}
+.btn-sm:hover{transform:translateY(-1px); opacity:.95}
+.kwork{
+  background:var(--kwork); color:#0a0a0a;  /* чёрный текст = контраст > 10:1 */
+  box-shadow:0 8px 22px rgba(0,211,127,.25);
+  border-color:rgba(0,0,0,.12);
+}
+.kwork .dot{
+  width:8px;height:8px;border-radius:50%; background:#0a0a0a; opacity:.9;
+}
+.hero{
+  display:grid; grid-template-columns:1.05fr .95fr; gap:28px; align-items:center;
+  padding:26px 0 40px;
+}
+@media (max-width:960px){ .hero{grid-template-columns:1fr} }
+.card{
+  background:var(--glass); border:1px solid var(--stroke); border-radius:16px; padding:18px;
+  box-shadow:0 16px 46px rgba(0,0,0,.25); backdrop-filter:blur(10px);
+  display:inline-block;
+}
+h1{
+  margin:12px 0 10px; font-size:clamp(30px,6vw,62px); line-height:1.02; letter-spacing:-.01em; font-weight:800;
+}
+.lead{margin:8px 0 16px; color:var(--muted); max-width:58ch}
+.tags{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px}
+.tag{font-size:11px; padding:6px 8px; border-radius:999px; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink); border:1px dashed var(--stroke); background:rgba(255,255,255,.02)}
+.micro{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px}
+.item{background:rgba(255,255,255,.04); border:1px solid var(--stroke); border-radius:12px; padding:12px; min-height:92px}
+.item h3{margin:0 0 6px; font-size:13px}
+.item p{margin:0; color:var(--muted); font-size:12px}
+@media (max-width:960px){ .micro{grid-template-columns:1fr} }
+
+.visual{position:relative; min-height:420px; border-radius:20px; overflow:hidden; border:1px solid var(--stroke)}
+.grad{
+  position:absolute; inset:-20% -10% auto -10%; height:80%;
+  background:
+    radial-gradient(closest-side, rgba(99,230,255,.25), transparent 70%),
+    radial-gradient(closest-side, rgba(139,92,246,.25), transparent 70%);
+  filter:blur(40px); mix-blend-mode:screen; animation:float 12s ease-in-out infinite alternate;
+}
+@keyframes float{from{transform:translate(0,0) rotate(0) scale(1)}to{transform:translate(-3%,4%) rotate(6deg) scale(1.05)}}
+.visual svg{position:absolute; inset:0; width:100%; height:100%}
+.note-vert{position:absolute; right:10px; bottom:10px; writing-mode:vertical-rl; text-orientation:mixed; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+
+.footer{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 0 24px; color:var(--muted); font-size:13px}
+.footer a{color:var(--accent); text-decoration:none}
+
+/* тематические точки из предыдущей версии (оставил) */
+.themes{position:fixed; right:14px; bottom:14px; display:flex; gap:10px; z-index:10}
+.theme-dot{width:18px; height:18px; border-radius:50%; border:1px solid rgba(255,255,255,.6); cursor:pointer; box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.theme-dot[title="Glass"]{background:linear-gradient(135deg,#63e6ff,#8b5cf6)}
+.theme-dot[title="Mono"]{background:linear-gradient(135deg,#e8eaee,#a5adba)}
+.theme-dot[title="Warm"]{background:linear-gradient(135deg,#ffd2b4,#ff9e8c)}
+
+/* плавающая кнопка на мобильных */
+.fab{
+  position:fixed; right:14px; bottom:64px; z-index:12; display:none;
+}
+@media (max-width:720px){ .fab{display:block} }
+
+/* фокус для доступности */
+.btn-sm:focus-visible{outline:2px solid #fff; outline-offset:2px}
+</style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <div class="wrap">
+    <header class="header">
+      <div class="brand"><i aria-hidden="true"></i><span>Fix&Polish</span></div>
+      <!-- Явная, читаемая кнопка на Kwork -->
+      <a class="btn-sm kwork" href="https://kwork.ru/" target="_blank" rel="noopener"
+         title="Перейти на мой кворк" aria-label="Перейти на мой кворк">
+        <span class="dot" aria-hidden="true"></span>
+        Заказать на Kwork
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 5l7 7-7 7" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </a>
+    </header>
+
+    <section class="hero">
+      <div>
+        <span class="card">Быстро и аккуратно</span>
+        <h1>Исправлю и доработаю ваш HTML/CSS/JS</h1>
+        <p class="lead">Чиню верстку и адаптив, устраняю CSS/JS‑баги, настраиваю плавные эффекты и ускоряю загрузку. Работаю бережно: без лишних библиотек, с проверкой на мобильных и популярных браузерах.</p>
+        <div class="tags">
+          <span class="tag">верстка</span><span class="tag">адаптив</span><span class="tag">css/js</span><span class="tag">скорость</span>
+        </div>
+
+        <div class="micro">
+          <div class="item">
+            <h3>Точные правки</h3>
+            <p>Фиксы отступов, сеток, переполнений, состояния ховеров и фокусов.</p>
+          </div>
+          <div class="item">
+            <h3>Чистый код</h3>
+            <p>Понятные классы, без конфликтов, с комментариями и переменными.</p>
+          </div>
+          <div class="item">
+            <h3>Производительность</h3>
+            <p>CritCSS, lazy, оптимальные анимации (transform/opacity), Lighthouse.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual" aria-hidden="true">
+        <div class="grad"></div>
+        <svg viewBox="0 0 1200 600" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="line" x1="0" x2="1">
+              <stop offset="0%" stop-color="rgba(99,230,255,.85)"/>
+              <stop offset="100%" stop-color="rgba(139,92,246,.85)"/>
+            </linearGradient>
+          </defs>
+          <path d="M160,110 C260,80 340,140 420,120 S620,60 740,120 920,220 1040,200" fill="none" stroke="url(#line)" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+          <path d="M160,480 C260,450 340,510 420,490 S620,430 740,490 920,590 1040,560" fill="none" stroke="url(#line)" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+          <path d="M120,120 q-40,60 0,120 q-40,60 0,120" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
+          <path d="M1080,120 q40,60 0,120 q40,60 0,120" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
+        </svg>
+        <div class="note-vert">точные правки • аккуратный код</div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Готов подключиться сегодня</span>
+      <a href="mailto:hellogafurovalyosha@gmail.com">gafurovalyosha@gmail.com</a>
+    </footer>
+  </div>
+
+  <!-- Плавающая кнопка Kwork для мобильных -->
+  <div class="fab">
+    <a class="btn-sm kwork" href="https://kwork.ru/" target="_blank" rel="noopener"
+       title="Кворк" aria-label="Кворк: заказать правки">
+      <span class="dot" aria-hidden="true"></span> Kwork
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 12h14M13 5l7 7-7 7" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Сохранены точки для смены темы -->
+  <div class="themes" title="Стиль">
+    <button class="theme-dot" title="Glass" aria-label="Стиль Glass"></button>
+    <button class="theme-dot" title="Mono" aria-label="Стиль Mono"></button>
+    <button class="theme-dot" title="Warm" aria-label="Стиль Warm"></button>
+  </div>
+
+<script>
+const styles = {
+  Glass: {bg1:'#0f1220', bg2:'#0b0e19', accent:'#63e6ff', ink:'#eaf3ff', muted:'#a7b3c9', glass:'rgba(255,255,255,.06)', stroke:'rgba(255,255,255,.16)'},
+  Mono:  {bg1:'#101114', bg2:'#17181c', accent:'#c6d3ff', ink:'#eef1f7', muted:'#a9afbd', glass:'rgba(255,255,255,.05)', stroke:'rgba(255,255,255,.14)'},
+  Warm:  {bg1:'#2a2020', bg2:'#2a1b16', accent:'#ffb29a', ink:'#fff4ef', muted:'#e7d6cf', glass:'rgba(255,255,255,.07)', stroke:'rgba(255,255,255,.18)'}
+};
+function setTheme(t){
+  const v = styles[t];
+  for(const [k,val] of Object.entries({ '--bg1':v.bg1, '--bg2':v.bg2, '--accent':v.accent, '--ink':v.ink, '--muted':v.muted, '--glass':v.glass, '--stroke':v.stroke, '--ring':`${v.accent}88` })){
+    document.documentElement.style.setProperty(k,val);
+  }
+}
+document.querySelectorAll('.theme-dot').forEach(btn=>{
+  btn.addEventListener('click', ()=> setTheme(btn.title));
+});
+</script>
+</body>
+</html>
