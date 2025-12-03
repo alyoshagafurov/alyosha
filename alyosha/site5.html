@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeHome — Умный и безопасный дом</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root{
+            --green:#00b894;
+            --green-dark:#009a7a;
+            --dark:#111827;
+            --text:#4b5563;
+            --muted:#9ca3af;
+            --bg:#ffffff;
+            --bg-soft:#f3f4f6;
+            --card:#ffffff;
+            --border:#e5e7eb;
+        }
+        :root[data-theme="dark"]{
+            --dark:#f9fafb;
+            --text:#e5e7eb;
+            --muted:#9ca3af;
+            --bg:#020617;
+            --bg-soft:#020617;
+            --card:#020617;
+            --border:#1f2937;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{
+            font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.5;
+            scroll-behavior:smooth;
+        }
+        img{max-width:100%;display:block;border:0;}
+        a{text-decoration:none;color:inherit;}
+
+        .container{
+            width:100%;
+            max-width:1160px;
+            margin:0 auto;
+            padding:0 18px;
+        }
+
+        /* PRELOADER */
+        #preloader{
+            position:fixed;
+            inset:0;
+            background:#020617;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            gap:14px;
+            color:#e5e7eb;
+            z-index:9999;
+        }
+        .loader-ring{
+            width:48px;
+            height:48px;
+            border-radius:50%;
+            border:4px solid rgba(148,163,184,0.4);
+            border-top-color:#22d3ee;
+            animation:spin .8s linear infinite;
+        }
+        @keyframes spin{to{transform:rotate(360deg);}}
+
+        /* HEADER */
+        header{
+            position:sticky;
+            top:0;
+            z-index:50;
+            background:var(--bg);
+            box-shadow:0 1px 4px rgba(15,23,42,0.06);
+            transition:box-shadow .2s,background .2s;
+        }
+        header.scrolled{
+            box-shadow:0 8px 24px rgba(15,23,42,0.16);
+        }
+        .nav{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:10px 0;
+            gap:12px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            font-weight:700;
+            font-size:20px;
+            color:var(--dark);
+        }
+        .brand-logo{
+            width:26px;
+            height:26px;
+            border-radius:7px;
+            background:radial-gradient(circle at 30% 20%,#6ee7b7,#22c55e 40%,#16a34a);
+            position:relative;
+            overflow:hidden;
+        }
+        .brand-logo::after{
+            content:"";
+            position:absolute;
+            inset:7px 4px 4px 7px;
+            border-radius:50%;
+            border:2px solid rgba(255,255,255,0.75);
+        }
+
+        .nav-links{
+            display:flex;
+            gap:22px;
+            font-size:14px;
+        }
+        .nav-links a{
+            position:relative;
+            color:var(--text);
+        }
+        .nav-links a::after{
+            content:"";
+            position:absolute;
+            left:0;
+            bottom:-4px;
+            width:0;
+            height:2px;
+            border-radius:999px;
+            background:var(--green);
+            transition:.18s;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after{
+            width:100%;
+        }
+
+        .nav-right{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-size:14px;
+            white-space:nowrap;
+        }
+        .nav-phone{font-weight:600;color:var(--dark);}
+
+        .btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            padding:8px 18px;
+            border-radius:999px;
+            border:1px solid transparent;
+            font-size:14px;
+            cursor:pointer;
+            background:none;
+            transition:background .2s,color .2s,box-shadow .2s,border-color .2s,transform .1s;
+        }
+        .btn-primary{
+            background:var(--green);
+            color:#fff;
+            box-shadow:0 6px 18px rgba(16,185,129,0.5);
+        }
+        .btn-primary:hover{
+            background:var(--green-dark);
+        }
+        .btn-primary:active{
+            transform:translateY(1px);
+            box-shadow:0 3px 10px rgba(16,185,129,0.4);
+        }
+        .btn-ghost{
+            border-color:var(--border);
+            color:var(--text);
+        }
+        .btn-ghost:hover{
+            background:rgba(148,163,184,0.15);
+        }
+
+        .theme-toggle{
+            width:34px;
+            height:34px;
+            border-radius:999px;
+            border:1px solid var(--border);
+            background:none;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:16px;
+            color:var(--dark);
+        }
+
+        .burger{
+            display:none;
+            width:36px;
+            height:36px;
+            border-radius:999px;
+            border:1px solid var(--border);
+            background:none;
+            cursor:pointer;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:4px;
+        }
+        .burger span{
+            width:16px;height:2px;border-radius:999px;
+            background:var(--dark);
+            transition:.2s;
+        }
+        .burger.active span:nth-child(1){
+            transform:translateY(4px) rotate(45deg);
+        }
+        .burger.active span:nth-child(2){
+            opacity:0;
+        }
+        .burger.active span:nth-child(3){
+            transform:translateY(-4px) rotate(-45deg);
+        }
+
+        /* HERO */
+        .hero{
+            padding:56px 0 72px;
+            background:linear-gradient(to bottom,#f9fafb 0,#e5f6ff 40%,#f9fafb 100%);
+        }
+        :root[data-theme="dark"] .hero{
+            background:radial-gradient(circle at top,#0b1120,#020617 60%);
+        }
+        .hero-layout{
+            display:grid;
+            grid-template-columns:1.2fr 1.1fr;
+            gap:32px;
+            align-items:center;
+        }
+        .hero-title{
+            font-size:36px;
+            font-weight:700;
+            color:var(--dark);
+            margin-bottom:10px;
+        }
+        .hero-sub{
+            font-size:16px;
+            color:var(--text);
+            margin-bottom:22px;
+            max-width:480px;
+        }
+        .hero-badges{
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+            margin-bottom:20px;
+            font-size:12px;
+            color:var(--muted);
+        }
+        .badge{
+            padding:4px 10px;
+            border-radius:999px;
+            background:#ecfeff;
+            border:1px solid #a5f3fc;
+            color:#0f766e;
+        }
+        .hero-cta{
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+            align-items:center;
+            margin-bottom:20px;
+        }
+        .hero-note{
+            font-size:12px;
+            color:var(--muted);
+        }
+        .hero-metrics{
+            display:flex;
+            flex-wrap:wrap;
+            gap:14px;
+            margin-top:10px;
+            font-size:12px;
+        }
+        .metric{
+            padding:8px 10px;
+            border-radius:10px;
+            background:rgba(255,255,255,0.9);
+            border:1px solid rgba(209,213,219,0.8);
+        }
+        :root[data-theme="dark"] .metric{
+            background:rgba(15,23,42,0.9);
+            border-color:#1f2937;
+        }
+
+        .hero-device{
+            position:relative;
+            padding:26px 18px 18px;
+            border-radius:22px;
+            background:#f9fafb;
+            box-shadow:0 18px 60px rgba(15,23,42,0.35);
+            overflow:hidden;
+        }
+        :root[data-theme="dark"] .hero-device{
+            background:#020617;
+        }
+        .hero-device::before{
+            content:"";
+            position:absolute;
+            inset:-80px;
+            background:radial-gradient(circle at 30% 0,rgba(52,211,153,.4),transparent 60%);
+            opacity:.7;
+        }
+        .device-inner{
+            position:relative;
+            display:flex;
+            align-items:flex-end;
+            justify-content:center;
+            gap:18px;
+        }
+        .panel{
+            width:130px;
+            height:170px;
+            border-radius:18px;
+            background:#fff;
+            box-shadow:0 8px 25px rgba(15,23,42,0.35);
+            padding:12px 10px;
+        }
+        .panel-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:6px;
+            margin-top:10px;
+        }
+        .panel-dot{
+            width:10px;height:10px;border-radius:50%;
+            background:#e5e7eb;
+        }
+        .panel-dot:nth-child(odd){background:#d1d5db;}
+        .hub{
+            width:150px;height:175px;
+            border-radius:24px;
+            background:#f9fafb;
+            box-shadow:0 10px 26px rgba(15,23,42,0.6);
+            position:relative;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:600;
+            color:#111827;
+        }
+        .hub::after{
+            content:"SafeHome";
+        }
+        .sensor{
+            width:52px;height:90px;border-radius:18px;
+            background:#ffffff;
+            box-shadow:0 10px 20px rgba(15,23,42,0.4);
+        }
+        .phone-mock{
+            position:absolute;
+            right:8px;
+            top:18px;
+            width:140px;
+            height:260px;
+            border-radius:26px;
+            background:#020617;
+            padding:8px 6px;
+            box-shadow:0 18px 40px rgba(15,23,42,.8);
+        }
+        .phone-inner{
+            width:100%;
+            height:100%;
+            border-radius:22px;
+            background:#f9fafb;
+            padding:8px;
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+        .phone-head{
+            display:flex;
+            justify-content:space-between;
+            font-size:10px;
+            color:#6b7280;
+        }
+        .room-card{
+            border-radius:10px;
+            background:#fff;
+            padding:6px 8px;
+            font-size:10px;
+            display:flex;
+            justify-content:space-between;
+            box-shadow:0 1px 3px rgba(15,23,42,0.1);
+        }
+
+        /* GENERIC SECTION */
+        section{padding:70px 0;transition:background .2s,color .2s;}
+        .section-title{
+            text-align:center;
+            font-size:28px;
+            font-weight:700;
+            color:var(--dark);
+            margin-bottom:6px;
+        }
+        .section-sub{
+            text-align:center;
+            max-width:560px;
+            margin:0 auto 30px;
+            font-size:15px;
+            color:var(--muted);
+        }
+
+        /* BENEFITS */
+        .benefits{
+            background:var(--bg);
+        }
+        .benefit-grid{
+            display:grid;
+            grid-template-columns:1.4fr 1fr;
+            gap:40px;
+            align-items:center;
+        }
+        .benefit-list{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(180px,1fr));
+            gap:20px 26px;
+        }
+        .benefit-item{
+            display:flex;
+            gap:10px;
+            font-size:14px;
+        }
+        .benefit-icon{
+            width:28px;height:28px;
+            border-radius:999px;
+            background:#ecfdf5;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:16px;
+        }
+        :root[data-theme="dark"] .benefit-icon{
+            background:#022c22;
+        }
+        .benefit-item h4{
+            font-size:14px;
+            margin-bottom:3px;
+            color:var(--dark);
+        }
+        .benefit-item p{
+            font-size:13px;
+            color:var(--muted);
+        }
+        .benefit-photo{
+            border-radius:18px;
+            overflow:hidden;
+            box-shadow:0 14px 40px rgba(15,23,42,0.32);
+            position:relative;
+        }
+        .benefit-overlay{
+            position:absolute;
+            right:14px;bottom:14px;
+            background:rgba(15,23,42,0.9);
+            color:#e5e7eb;
+            font-size:12px;
+            padding:8px 10px;
+            border-radius:999px;
+            display:flex;
+            align-items:center;
+            gap:6px;
+        }
+
+        /* STEPS */
+        .steps{
+            background:var(--bg-soft);
+        }
+        .steps-row{
+            display:grid;
+            grid-template-columns:repeat(4,minmax(160px,1fr));
+            gap:20px;
+            font-size:13px;
+        }
+        .step{
+            padding:14px 14px 16px;
+            background:var(--card);
+            border-radius:14px;
+            border:1px solid var(--border);
+            position:relative;
+        }
+        .step-number{
+            width:24px;height:24px;border-radius:999px;
+            background:var(--green);
+            color:#fff;font-size:12px;
+            display:flex;align-items:center;justify-content:center;
+            margin-bottom:8px;
+        }
+        .step h4{
+            font-size:14px;
+            margin-bottom:4px;
+            color:var(--dark);
+        }
+        .step p{color:var(--muted);}
+
+        /* APP BLOCK */
+        .app{
+            background:var(--bg);
+        }
+        .app-layout{
+            display:grid;
+            grid-template-columns:1.1fr 1.1fr;
+            gap:32px;
+            align-items:center;
+        }
+        .phone-big{
+            margin:0 auto;
+            width:250px;
+            height:480px;
+            border-radius:40px;
+            background:#020617;
+            padding:16px 10px;
+            box-shadow:0 25px 60px rgba(15,23,42,.9);
+        }
+        .phone-big-inner{
+            width:100%;
+            height:100%;
+            border-radius:32px;
+            background:#f9fafb;
+            padding:14px 12px;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+        .phone-big-head{
+            display:flex;
+            justify-content:space-between;
+            font-size:12px;
+            font-weight:600;
+        }
+        .status-pill{
+            padding:2px 8px;border-radius:999px;
+            background:#ecfdf5;
+            font-size:10px;
+            color:#166534;
+        }
+        .zone{
+            border-radius:14px;
+            background:#ffffff;
+            padding:10px;
+            font-size:12px;
+            margin-bottom:6px;
+            box-shadow:0 2px 4px rgba(15,23,42,.06);
+        }
+        .zone-top{display:flex;justify-content:space-between;margin-bottom:4px;}
+        .zone-bottom{display:flex;justify-content:space-between;font-size:11px;color:#6b7280;}
+        .app-features{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(180px,1fr));
+            gap:18px 26px;
+            font-size:14px;
+        }
+        .app-features h4{
+            font-size:14px;
+            margin-bottom:4px;
+            color:var(--dark);
+        }
+        .app-features p{
+            font-size:13px;
+            color:var(--muted);
+        }
+
+        /* PRICING + CALC */
+        .pricing{
+            background:var(--bg-soft);
+        }
+        .billing-toggle{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            gap:10px;
+            font-size:13px;
+            margin-bottom:20px;
+        }
+        .switch{
+            width:52px;height:26px;border-radius:999px;
+            background:#e5e7eb;position:relative;
+            cursor:pointer;
+        }
+        .switch-handle{
+            position:absolute;
+            top:3px;left:3px;
+            width:20px;height:20px;border-radius:50%;
+            background:#fff;
+            box-shadow:0 1px 4px rgba(0,0,0,.3);
+            transition:transform .2s;
+        }
+        .switch.on{background:#bbf7d0;}
+        .switch.on .switch-handle{
+            transform:translateX(24px);
+        }
+        .pricing-grid{
+            display:grid;
+            grid-template-columns:repeat(3,minmax(230px,1fr));
+            gap:18px;
+        }
+        .plan{
+            background:var(--card);
+            border-radius:18px;
+            padding:18px 18px 20px;
+            border:1px solid var(--border);
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+        .plan.popular{
+            border-color:var(--green);
+            box-shadow:0 14px 45px rgba(16,185,129,0.4);
+            transform:translateY(-4px);
+        }
+        .plan-badge{
+            align-self:flex-start;
+            font-size:11px;
+            padding:3px 8px;
+            border-radius:999px;
+            background:#ecfdf5;
+            color:#166534;
+        }
+        .plan-title{
+            font-weight:600;color:var(--dark);
+        }
+        .plan-price{
+            font-size:22px;
+            font-weight:700;
+            color:var(--dark);
+        }
+        .plan-price span{
+            font-size:13px;
+            color:var(--muted);
+            font-weight:400;
+        }
+        .plan ul{
+            list-style:none;
+            padding-left:0;
+            font-size:13px;
+            color:var(--muted);
+        }
+        .plan li{
+            position:relative;
+            padding-left:16px;
+            margin-bottom:4px;
+        }
+        .plan li::before{
+            content:"✓";
+            position:absolute;
+            left:0;top:0;
+            color:var(--green);
+        }
+        .plan-footer{margin-top:auto;}
+
+        .calc{
+            margin-top:32px;
+            background:var(--card);
+            border-radius:16px;
+            padding:16px 18px;
+            border:1px solid var(--border);
+            display:grid;
+            grid-template-columns:1.5fr 1fr;
+            gap:18px;
+            font-size:13px;
+        }
+        .calc-controls{
+            display:grid;
+            grid-template-columns:repeat(3, minmax(80px,1fr));
+            gap:10px;
+        }
+        .calc-field label{
+            display:block;
+            font-size:12px;
+            margin-bottom:4px;
+            color:var(--muted);
+        }
+        .calc-field input{
+            width:100%;
+            padding:6px 8px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            font-size:14px;
+            background:var(--bg);
+            color:var(--text);
+        }
+        .calc-total{
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:flex-start;
+            gap:6px;
+        }
+        .calc-main{
+            font-size:20px;
+            font-weight:700;
+            color:var(--dark);
+        }
+        .calc-note{font-size:12px;color:var(--muted);}
+
+        /* REVIEWS */
+        .reviews{
+            background:var(--bg);
+        }
+        .reviews-inner{
+            max-width:720px;
+            margin:0 auto;
+            text-align:center;
+        }
+        .review-box{
+            background:var(--card);
+            border-radius:16px;
+            border:1px solid var(--border);
+            padding:20px 22px 18px;
+            box-shadow:0 10px 40px rgba(15,23,42,0.18);
+            min-height:150px;
+        }
+        .review-text{font-size:15px;margin-bottom:10px;}
+        .review-author{font-weight:600;color:var(--dark);}
+        .review-meta{font-size:12px;color:var(--muted);}
+        .review-nav{
+            display:flex;
+            justify-content:center;
+            gap:8px;
+            margin-top:12px;
+        }
+        .review-dot{
+            width:9px;height:9px;border-radius:999px;border:none;
+            background:#d1d5db;cursor:pointer;
+        }
+        .review-dot.active{
+            width:22px;background:var(--green);
+        }
+
+        /* FAQ */
+        .faq{
+            background:var(--bg-soft);
+        }
+        .faq-grid{
+            max-width:780px;
+            margin:0 auto;
+        }
+        .faq-item{
+            background:var(--card);
+            border-radius:14px;
+            border:1px solid var(--border);
+            margin-bottom:10px;
+            overflow:hidden;
+        }
+        .faq-header{
+            padding:12px 14px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            cursor:pointer;
+            font-size:14px;
+        }
+        .faq-title{color:var(--dark);}
+        .faq-toggle{
+            width:22px;height:22px;border-radius:999px;
+            border:1px solid var(--border);
+            display:flex;align-items:center;justify-content:center;
+            font-size:14px;
+        }
+        .faq-body{
+            max-height:0;
+            overflow:hidden;
+            padding:0 14px;
+            font-size:13px;
+            color:var(--muted);
+            transition:max-height .25s ease,padding-bottom .25s ease;
+        }
+        .faq-item.open .faq-body{
+            padding-bottom:10px;
+        }
+
+        /* CONTACTS */
+        .contacts{
+            background:var(--bg);
+        }
+        .contacts-layout{
+            display:grid;
+            grid-template-columns:1.2fr 1.2fr;
+            gap:30px;
+        }
+        .contact-info p{
+            font-size:14px;
+            color:var(--muted);
+            margin-bottom:10px;
+        }
+        .contact-row{
+            font-size:14px;
+            margin-bottom:6px;
+        }
+        .contact-label{
+            font-weight:600;
+            color:var(--dark);
+        }
+
+        form{
+            font-size:14px;
+        }
+        .form-grid{
+            display:grid;
+            grid-template-columns:repeat(2, minmax(0,1fr));
+            gap:10px 14px;
+        }
+        .form-field{
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+        }
+        .form-field label{
+            font-size:12px;
+            color:var(--muted);
+        }
+        input,textarea,select{
+            padding:8px 9px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font:inherit;
+        }
+        textarea{resize:vertical;min-height:80px;}
+        input:focus,textarea:focus,select:focus{
+            outline:none;
+            border-color:var(--green);
+            box-shadow:0 0 0 2px rgba(16,185,129,.25);
+        }
+        .field-error{
+            border-color:#f97373 !important;
+            box-shadow:0 0 0 2px rgba(248,113,113,.45);
+        }
+        .error-msg{
+            font-size:11px;
+            color:#f97373;
+            min-height:12px;
+        }
+        .form-actions{
+            grid-column:1/-1;
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            align-items:center;
+        }
+        .form-note{
+            font-size:11px;
+            color:var(--muted);
+        }
+
+        footer{
+            padding:14px 0 18px;
+            text-align:center;
+            font-size:13px;
+            color:#9ca3af;
+            background:#020617;
+        }
+
+        /* Back to top */
+        #backToTop{
+            position:fixed;
+            right:18px;bottom:18px;
+            width:40px;height:40px;
+            border-radius:999px;border:none;
+            background:var(--green);
+            color:#fff;
+            font-size:18px;
+            cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            box-shadow:0 12px 30px rgba(16,185,129,.7);
+            opacity:0;visibility:hidden;transform:translateY(8px);
+            transition:opacity .2s,transform .2s,visibility .2s;
+            z-index:40;
+        }
+        #backToTop.visible{
+            opacity:1;visibility:visible;transform:translateY(0);
+        }
+
+        /* MODAL */
+        .modal-backdrop{
+            position:fixed;
+            inset:0;
+            background:rgba(15,23,42,0.7);
+            display:none;
+            align-items:center;
+            justify-content:center;
+            z-index:60;
+        }
+        .modal-backdrop.show{display:flex;}
+        .modal{
+            background:var(--card);
+            border-radius:16px;
+            padding:18px 18px 14px;
+            max-width:380px;
+            width:100%;
+            box-shadow:0 20px 60px rgba(0,0,0,.8);
+        }
+        .modal-title{
+            font-size:18px;
+            font-weight:600;
+            color:var(--dark);
+            margin-bottom:4px;
+        }
+        .modal-text{
+            font-size:13px;
+            color:var(--muted);
+            margin-bottom:12px;
+        }
+        .modal-actions{
+            display:flex;
+            justify-content:flex-end;
+            gap:8px;
+            margin-top:8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width:992px){
+            .hero-layout,
+            .benefit-grid,
+            .app-layout,
+            .contacts-layout{
+                grid-template-columns:1fr;
+            }
+            .hero-device{margin-top:12px;}
+            .steps-row{
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+            .pricing-grid{
+                grid-template-columns:repeat(2,minmax(0,1fr));
+            }
+            .calc{
+                grid-template-columns:1.3fr 1fr;
+            }
+        }
+        @media (max-width:768px){
+            .nav-links{
+                position:absolute;
+                left:0;right:0;top:100%;
+                background:var(--bg);
+                flex-direction:column;
+                padding:10px 18px 12px;
+                transform:translateY(-10px);
+                opacity:0;
+                pointer-events:none;
+                box-shadow:0 10px 22px rgba(15,23,42,.22);
+                z-index:45;
+            }
+            .nav-links.open{
+                opacity:1;pointer-events:auto;transform:translateY(0);
+            }
+            .burger{display:flex;}
+            .nav-phone{display:none;}
+            .hero-layout{gap:26px;}
+            .hero-title{font-size:30px;}
+            section{padding:56px 0;}
+            .steps-row{grid-template-columns:1fr;}
+            .pricing-grid{grid-template-columns:1fr;}
+            .calc{grid-template-columns:1fr;}
+            .benefit-list,.app-features{
+                grid-template-columns:1fr;
+            }
+        }
+        @media (max-width:520px){
+            .hero-title{font-size:26px;}
+            .hero-device{padding:20px 14px;}
+            .phone-big{width:210px;height:420px;}
+            .form-grid{grid-template-columns:1fr;}
+            .calc-controls{grid-template-columns:1fr;}
+        }
+    </style>
+</head>
+<body>
+
+<div id="preloader">
+    <div class="loader-ring"></div>
+    <div style="font-size:14px;">Инициализация системы безопасного дома…</div>
+</div>
+
+<header id="header">
+    <div class="container nav">
+        <a href="#top" class="brand">
+            <div class="brand-logo"></div>
+            <span>SafeHome</span>
+        </a>
+        <nav class="nav-links" id="navLinks">
+            <a href="#how" class="nav-link">Как работает</a>
+            <a href="#app" class="nav-link">Приложение</a>
+            <a href="#pricing" class="nav-link">Тарифы</a>
+            <a href="#reviews" class="nav-link">Отзывы</a>
+            <a href="#contacts" class="nav-link">Контакты</a>
+        </nav>
+        <div class="nav-right">
+            <span class="nav-phone">+7 (900) 456‑78‑90</span>
+            <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">☾</button>
+            <button class="burger" id="burger" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+            <button class="btn btn-primary" id="openCalcModal">Рассчитать стоимость</button>
+        </div>
+    </div>
+</header>
+
+<main id="top">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="container hero-layout">
+            <div>
+                <div class="hero-badges">
+                    <span class="badge">24/7 мониторинг</span>
+                    <span class="badge">Мобильное приложение</span>
+                    <span class="badge">Установка за 1 день</span>
+                </div>
+                <h1 class="hero-title">Установка охранной системы «умный и безопасный дом»</h1>
+                <p class="hero-sub">
+                    Защитите квартиру от проникновения, пожара и протечки воды. Управляйте датчиками и видеонаблюдением
+                    через одно удобное приложение, где бы вы ни находились.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" id="primaryHeroCta">Оставить заявку</button>
+                    <a href="#how" class="btn btn-ghost">Посмотреть, как это работает</a>
+                </div>
+                <p class="hero-note">Бесплатный выезд инженера и индивидуальный подбор оборудования.</p>
+                <div class="hero-metrics">
+                    <div class="metric">10 000+ установленных систем</div>
+                    <div class="metric">Сокращение числа краж на 92%</div>
+                    <div class="metric">Гарантия оборудования 3 года</div>
+                </div>
+            </div>
+            <div class="hero-device" aria-hidden="true">
+                <div class="device-inner">
+                    <div class="panel">
+                        <div style="height:18px;border-radius:10px;background:#f3f4f6;"></div>
+                        <div class="panel-grid">
+                            <div class="panel-dot"></div><div class="panel-dot"></div><div class="panel-dot"></div>
+                            <div class="panel-dot"></div><div class="panel-dot"></div><div class="panel-dot"></div>
+                            <div class="panel-dot"></div><div class="panel-dot"></div><div class="panel-dot"></div>
+                        </div>
+                    </div>
+                    <div class="hub"></div>
+                    <div class="sensor"></div>
+                    <div class="phone-mock">
+                        <div class="phone-inner">
+                            <div class="phone-head">
+                                <span>Квартира</span>
+                                <span style="font-size:10px;color:#16a34a;">Охрана включена</span>
+                            </div>
+                            <div class="room-card">
+                                <div>Гостиная</div>
+                                <div>22°C · 38%</div>
+                            </div>
+                            <div class="room-card">
+                                <div>Кухня</div>
+                                <div>24°C · 42%</div>
+                            </div>
+                            <div class="room-card">
+                                <div>Детская</div>
+                                <div>21°C · 40%</div>
+                            </div>
+                            <div style="margin-top:auto;font-size:9px;color:#6b7280;display:flex;justify-content:space-between;">
+                                <span>Датчики: 12</span>
+                                <span>Камеры: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS / HOW -->
+    <section class="benefits" id="how">
+        <div class="container">
+            <h2 class="section-title">Комплексная защита квартиры</h2>
+            <p class="section-sub">
+                Беспроводные датчики движения, дыма, утечки и открытия дверей работают в одной системе. Все события
+                мгновенно приходят в приложение и в пульт охраны.
+            </p>
+            <div class="benefit-grid">
+                <div class="benefit-list">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">👁</div>
+                        <div>
+                            <h4>Защита от проникновения</h4>
+                            <p>Датчики движения и открытия дверей моментально фиксируют попытку взлома и запускают сирену.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔥</div>
+                        <div>
+                            <h4>Защита от пожара</h4>
+                            <p>Датчики дыма и температуры предупредят о возгорании задолго до появления открытого огня.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💧</div>
+                        <div>
+                            <h4>Контроль протечек</h4>
+                            <p>Датчики на полу перекроют воду и оповестят вас в случае протечки.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📹</div>
+                        <div>
+                            <h4>Видеонаблюдение</h4>
+                            <p>Подключите камеры и смотрите, что происходит дома, прямо со смартфона.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="benefit-photo">
+                    <img src="https://images.pexels.com/photos/4392270/pexels-photo-4392270.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                         alt="Интерьер квартиры с иконкой замка">
+                    <div class="benefit-overlay">
+                        <span style="font-size:16px;">🔒</span>
+                        <span>Квартира под защитой SafeHome</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps">
+        <div class="container">
+            <h2 class="section-title">Как проходит подключение</h2>
+            <p class="section-sub">
+                От заявки до полностью настроенной системы — всего один день. Все работы выполняются аккуратно,
+                без штробления стен.
+            </p>
+            <div class="steps-row">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Выбор оборудования</h4>
+                    <p>Инженер бесплатно выезжает на объект, проводит осмотр и подбирает оптимальный набор датчиков.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Монтаж и настройка</h4>
+                    <p>Устанавливаем датчики, подключаем к интернету и настраиваем приложение на вашем смартфоне.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Круглосуточный мониторинг</h4>
+                    <p>Сигналы тревоги передаются на пульт охраны и в приложение. Вы всегда в курсе происходящего.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Выезд группы реагирования</h4>
+                    <p>При подтверждённой тревоге к вам направляется экипаж быстрого реагирования.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- APP -->
+    <section class="app" id="app">
+        <div class="container">
+            <h2 class="section-title">Управляйте домом через приложение</h2>
+            <p class="section-sub">
+                Включайте охрану, просматривайте историю событий и управляйте сценариями с любого устройства. Без
+                абонентской платы за приложение.
+            </p>
+            <div class="app-layout">
+                <div class="phone-big" aria-hidden="true">
+                    <div class="phone-big-inner">
+                        <div class="phone-big-head">
+                            <span>Your home</span>
+                            <span class="status-pill">Все в порядке</span>
+                        </div>
+                        <div style="font-size:11px;color:#6b7280;">3 комнаты · 16 датчиков · 2 камеры</div>
+                        <div class="zone">
+                            <div class="zone-top">
+                                <span>Гостиная</span>
+                                <span style="color:#16a34a;">Охрана включена</span>
+                            </div>
+                            <div class="zone-bottom">
+                                <span>22°C</span>
+                                <span>Влажность 38%</span>
+                            </div>
+                        </div>
+                        <div class="zone">
+                            <div class="zone-top">
+                                <span>Кухня</span>
+                                <span style="color:#f97316;">Окно открыто</span>
+                            </div>
+                            <div class="zone-bottom">
+                                <span>24°C</span>
+                                <span>Датчики газа: норма</span>
+                            </div>
+                        </div>
+                        <div class="zone">
+                            <div class="zone-top">
+                                <span>Детская</span>
+                                <span style="color:#16a34a;">Наблюдение</span>
+                            </div>
+                            <div class="zone-bottom">
+                                <span>21°C</span>
+                                <span>Камера активна</span>
+                            </div>
+                        </div>
+                        <div style="margin-top:auto;font-size:11px;color:#6b7280;">
+                            Следующая проверка связи датчиков через 2 мин.
+                        </div>
+                    </div>
+                </div>
+                <div class="app-features">
+                    <div>
+                        <h4>Получайте мгновенные уведомления</h4>
+                        <p>Сообщения о тревоге, постановке и снятии с охраны приходят сразу вам и выбранным близким.</p>
+                    </div>
+                    <div>
+                        <h4>Подключайте близких</h4>
+                        <p>Добавьте супругов или соседей. Они смогут видеть статус системы и при необходимости вызвать помощь.</p>
+                    </div>
+                    <div>
+                        <h4>Используйте аналитику</h4>
+                        <p>Отслеживайте историю событий, включения и отключения охраны, качество связи и заряд датчиков.</p>
+                    </div>
+                    <div>
+                        <h4>Создавайте сценарии</h4>
+                        <p>Включайте свет при срабатывании датчика движения, перекрывайте воду при протечке, имитируйте присутствие.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING + CALCULATOR -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Тарифы и комплектующие</h2>
+            <p class="section-sub">
+                Оплата только за выбранные услуги. Оборудование остаётся у вас, мониторинг можно отключить в любой момент.
+            </p>
+
+            <div class="billing-toggle">
+                <span>Помесячно</span>
+                <div class="switch" id="billingSwitch">
+                    <div class="switch-handle"></div>
+                </div>
+                <span>Годовой (−15%)</span>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="plan">
+                    <div class="plan-title">Старт</div>
+                    <div class="plan-price"><span class="price-value" data-month="690" data-year="587">690 ₽</span><span>/мес</span></div>
+                    <ul>
+                        <li>Хаб, датчик открытия двери, клавиатура</li>
+                        <li>Оповещения в приложение</li>
+                        <li>Техподдержка 9:00–21:00</li>
+                    </ul>
+                    <div class="plan-footer">
+                        <button class="btn btn-ghost plan-cta" data-plan="Старт">Выбрать</button>
+                    </div>
+                </div>
+                <div class="plan popular">
+                    <span class="plan-badge">Рекомендуем</span>
+                    <div class="plan-title">Комфорт</div>
+                    <div class="plan-price"><span class="price-value" data-month="1090" data-year="927">1 090 ₽</span><span>/мес</span></div>
+                    <ul>
+                        <li>До 12 датчиков движения, дыма и протечки</li>
+                        <li>Подключение к пульту охраны</li>
+                        <li>Выезд группы реагирования</li>
+                    </ul>
+                    <div class="plan-footer">
+                        <button class="btn btn-primary plan-cta" data-plan="Комфорт">Оформить</button>
+                    </div>
+                </div>
+                <div class="plan">
+                    <div class="plan-title">Максимум</div>
+                    <div class="plan-price"><span class="price-value" data-month="1790" data-year="1522">1 790 ₽</span><span>/мес</span></div>
+                    <ul>
+                        <li>До 32 датчиков и 8 видеокамер</li>
+                        <li>Резервный канал связи и питание</li>
+                        <li>Расширенные сценарии автоматизации</li>
+                    </ul>
+                    <div class="plan-footer">
+                        <button class="btn btn-ghost plan-cta" data-plan="Максимум">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc">
+                <div>
+                    <h3 style="font-size:16px;margin-bottom:6px;color:var(--dark);">Калькулятор стартового комплекта</h3>
+                    <p class="calc-note" style="margin-bottom:10px;">
+                        Укажите примерное количество комнат и датчиков — мы рассчитаем ориентировочную стоимость оборудования.
+                    </p>
+                    <div class="calc-controls">
+                        <div class="calc-field">
+                            <label for="roomsInput">Комнат</label>
+                            <input type="number" id="roomsInput" min="1" max="10" value="2">
+                        </div>
+                        <div class="calc-field">
+                            <label for="motionInput">Датчиков движения</label>
+                            <input type="number" id="motionInput" min="0" max="20" value="3">
+                        </div>
+                        <div class="calc-field">
+                            <label for="waterInput">Датчиков протечки</label>
+                            <input type="number" id="waterInput" min="0" max="20" value="2">
+                        </div>
+                    </div>
+                </div>
+                <div class="calc-total">
+                    <div class="calc-main" id="calcTotal">≈ 18 900 ₽</div>
+                    <div class="calc-note" id="calcBreakdown"></div>
+                    <button class="btn btn-primary" id="calcToForm">Оставить заявку с этим комплектом</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <h2 class="section-title">Что говорят клиенты</h2>
+            <p class="section-sub">
+                Большинство клиентов приходят к нам по рекомендациям соседей и друзей.
+            </p>
+
+            <div class="reviews-inner">
+                <div class="review-box">
+                    <p class="review-text" id="reviewText"></p>
+                    <div class="review-author" id="reviewAuthor"></div>
+                    <div class="review-meta" id="reviewMeta"></div>
+                </div>
+                <div class="review-nav" id="reviewNav"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Частые вопросы</h2>
+            <p class="section-sub">Если у вас останутся вопросы — просто оставьте заявку, и мы всё подробно расскажем.</p>
+
+            <div class="faq-grid" id="faqList">
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div class="faq-title">Можно ли установить систему в съёмной квартире?</div>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-body">
+                        Да. Система полностью беспроводная и не требует штробления стен.
+                        При переезде вы сможете снять датчики и перенести их на новый объект.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div class="faq-title">Работает ли охрана без интернета?</div>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-body">
+                        Хаб оснащён SIM‑картой. При пропадании домашнего интернета связь с пультом и приложением
+                        сохраняется через мобильную сеть.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div class="faq-title">Что будет при отключении электричества?</div>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-body">
+                        У хаба и датчиков есть встроенный аккумулятор, который обеспечивает до 16 часов автономной работы.
+                        Вы получите уведомление о потере питания.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <div class="faq-title">Насколько часто нужно менять батарейки в датчиках?</div>
+                        <div class="faq-toggle">+</div>
+                    </div>
+                    <div class="faq-body">
+                        Средний срок службы батареек — 2–5 лет в зависимости от типа датчика и интенсивности использования.
+                        Приложение заранее предупредит о низком заряде.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTS / FORM -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <h2 class="section-title">Контакты и заявка на установку</h2>
+            <p class="section-sub">
+                Оставьте контактные данные — инженер перезвонит в течение 10 минут, чтобы уточнить детали и
+                предложить оптимальное решение под вашу квартиру.
+            </p>
+
+            <div class="contacts-layout">
+                <div class="contact-info">
+                    <p>Мы работаем в Москве и Московской области, выезжаем в день обращения или в удобное для вас время.</p>
+                    <div class="contact-row">
+                        <span class="contact-label">Адрес: </span>г. Москва, ул. Безопасная, 10, офис 24
+                    </div>
+                    <div class="contact-row">
+                        <span class="contact-label">Телефон: </span><a href="tel:+79004567890">+7 (900) 456‑78‑90</a>
+                    </div>
+                    <div class="contact-row">
+                        <span class="contact-label">E‑mail: </span><a href="mailto:info@safehome.ru">info@safehome.ru</a>
+                    </div>
+                    <div class="contact-row">
+                        <span class="contact-label">График: </span>Пн–Вс 9:00–22:00, без выходных
+                    </div>
+                </div>
+
+                <form id="requestForm" novalidate>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="name">Ваше имя *</label>
+                            <input type="text" id="name" name="name" placeholder="Иван">
+                            <div class="error-msg" id="nameError"></div>
+                        </div>
+                        <div class="form-field">
+                            <label for="phone">Телефон *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+7 900 000‑00‑00">
+                            <div class="error-msg" id="phoneError"></div>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">E‑mail (по желанию)</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com">
+                            <div class="error-msg" id="emailError"></div>
+                        </div>
+                        <div class="form-field">
+                            <label for="city">Город</label>
+                            <input type="text" id="city" name="city" placeholder="Москва">
+                            <div class="error-msg" id="cityError"></div>
+                        </div>
+                        <div class="form-field">
+                            <label for="rooms">Кол-во комнат</label>
+                            <select id="rooms" name="rooms">
+                                <option value="">Выберите…</option>
+                                <option>Студия</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4+</option>
+                            </select>
+                            <div class="error-msg" id="roomsError"></div>
+                        </div>
+                        <div class="form-field">
+                            <label for="plan">Интересующий тариф</label>
+                            <select id="plan" name="plan">
+                                <option value="">Пока не решил</option>
+                                <option value="Старт">Старт</option>
+                                <option value="Комфорт">Комфорт</option>
+                                <option value="Максимум">Максимум</option>
+                            </select>
+                            <div class="error-msg" id="planError"></div>
+                        </div>
+                        <div class="form-field" style="grid-column:1/-1;">
+                            <label for="message">Кратко опишите задачу *</label>
+                            <textarea id="message" name="message" placeholder="Например: хочу защитить квартиру и установить датчики протечки в санузлах."></textarea>
+                            <div class="error-msg" id="messageError"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="submitFormBtn">Отправить заявку</button>
+                            <div class="form-note">
+                                Нажимая кнопку, вы соглашаетесь с обработкой персональных данных и условиями оферты.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    © 2024 Система «SafeHome». Установка и обслуживание охранных комплексов. Все права защищены.
+</footer>
+
+<button id="backToTop" aria-label="Наверх">↑</button>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+        <div class="modal-title" id="modalTitle">Сообщение</div>
+        <div class="modal-text" id="modalText">Текст</div>
+        <div class="modal-actions">
+            <button class="btn btn-ghost" id="modalClose">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // PRELOADER
+    window.addEventListener('load', () => {
+        const pl = document.getElementById('preloader');
+        pl.style.opacity='0';
+        setTimeout(()=>pl.style.display='none',300);
+    });
+
+    // THEME
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    function applyTheme(t){
+        if(t==='dark'){
+            root.setAttribute('data-theme','dark');
+            themeToggle.textContent='☀';
+        }else{
+            root.setAttribute('data-theme','light');
+            themeToggle.textContent='☾';
+        }
+    }
+    const storedTheme = localStorage.getItem('safehome-theme') ||
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light');
+    applyTheme(storedTheme);
+    themeToggle.addEventListener('click',()=>{
+        const next = root.getAttribute('data-theme')==='dark'?'light':'dark';
+        applyTheme(next);
+        localStorage.setItem('safehome-theme',next);
+    });
+
+    // BURGER
+    const burger=document.getElementById('burger');
+    const navLinks=document.getElementById('navLinks');
+    burger.addEventListener('click',()=>{
+        burger.classList.toggle('active');
+        navLinks.classList.toggle('open');
+    });
+
+    // SMOOTH SCROLL & close menu
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click',e=>{
+            const id=a.getAttribute('href').substring(1);
+            const el=document.getElementById(id);
+            if(!el) return;
+            e.preventDefault();
+            const y=el.getBoundingClientRect().top+window.pageYOffset-72;
+            window.scrollTo({top:y,behavior:'smooth'});
+            burger.classList.remove('active');
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // HEADER + backToTop + active nav
+    const header=document.getElementById('header');
+    const backToTop=document.getElementById('backToTop');
+    const navAnchors=[...document.querySelectorAll('.nav-link')];
+    const sectionIds=['how','app','pricing','reviews','contacts'];
+
+    function updateActiveNav(){
+        const scrollY=window.scrollY||window.pageYOffset;
+        let currentId=null;
+        sectionIds.forEach(id=>{
+            const s=document.getElementById(id);
+            if(!s) return;
+            if(scrollY+90>=s.offsetTop) currentId=id;
+        });
+        navAnchors.forEach(a=>{
+            a.classList.toggle('active', a.getAttribute('href').substring(1)===currentId);
+        });
+    }
+
+    window.addEventListener('scroll',()=>{
+        const y=window.scrollY||window.pageYOffset;
+        header.classList.toggle('scrolled',y>10);
+        backToTop.classList.toggle('visible',y>300);
+        updateActiveNav();
+    });
+    backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // MODAL helpers
+    const modalBackdrop=document.getElementById('modalBackdrop');
+    const modalTitle=document.getElementById('modalTitle');
+    const modalText=document.getElementById('modalText');
+    const modalClose=document.getElementById('modalClose');
+    function openModal(t,txt){
+        modalTitle.textContent=t;
+        modalText.textContent=txt;
+        modalBackdrop.classList.add('show');
+    }
+    function closeModal(){modalBackdrop.classList.remove('show');}
+    modalClose.addEventListener('click',closeModal);
+    modalBackdrop.addEventListener('click',e=>{if(e.target===modalBackdrop)closeModal();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+    // HERO CTA -> scroll to form
+    const primaryHeroCta=document.getElementById('primaryHeroCta');
+    primaryHeroCta.addEventListener('click',()=>{
+        const el=document.getElementById('contacts');
+        const y=el.getBoundingClientRect().top+window.pageYOffset-80;
+        window.scrollTo({top:y,behavior:'smooth'});
+    });
+
+    // PRICING billing switch
+    const billingSwitch=document.getElementById('billingSwitch');
+    const priceSpans=document.querySelectorAll('.price-value');
+    let billingYear=false;
+    function updatePrices(){
+        priceSpans.forEach(span=>{
+            const m=+span.dataset.month;
+            const y=+span.dataset.year;
+            span.textContent=(billingYear?y:m).toLocaleString('ru-RU')+' ₽';
+        });
+    }
+    billingSwitch.addEventListener('click',()=>{
+        billingYear=!billingYear;
+        billingSwitch.classList.toggle('on',billingYear);
+        updatePrices();
+    });
+    updatePrices();
+
+    // PLAN CTA -> set plan in form
+    document.querySelectorAll('.plan-cta').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            const planName=btn.dataset.plan;
+            const planSelect=document.getElementById('plan');
+            for(const opt of planSelect.options){
+                if(opt.value===planName){planSelect.value=planName;break;}
+            }
+            openModal('Тариф выбран',
+                'Вы выбрали тариф «'+planName+
+                '». Оставьте контактные данные в форме ниже, и мы расскажем о нём подробнее.');
+            const el=document.getElementById('contacts');
+            const y=el.getBoundingClientRect().top+window.pageYOffset-80;
+            window.scrollTo({top:y,behavior:'smooth'});
+        });
+    });
+
+    // CALCULATOR
+    const roomsInput=document.getElementById('roomsInput');
+    const motionInput=document.getElementById('motionInput');
+    const waterInput=document.getElementById('waterInput');
+    const calcTotal=document.getElementById('calcTotal');
+    const calcBreak=document.getElementById('calcBreakdown');
+
+    function recalc(){
+        const rooms=Math.max(1,parseInt(roomsInput.value||'0',10));
+        const motion=Math.max(0,parseInt(motionInput.value||'0',10));
+        const water=Math.max(0,parseInt(waterInput.value||'0',10));
+        const hubPrice=8900;
+        const baseSet=rooms*1800;
+        const motionPrice=motion*1200;
+        const waterPrice=water*900;
+        const total=hubPrice+baseSet+motionPrice+waterPrice;
+        calcTotal.textContent='≈ '+total.toLocaleString('ru-RU')+' ₽';
+        calcBreak.textContent='Хаб — 8 900 ₽, комплект по комнатам — '+baseSet.toLocaleString('ru-RU')+
+            ' ₽, датчики движения — '+motionPrice.toLocaleString('ru-RU')+
+            ' ₽, датчики протечки — '+waterPrice.toLocaleString('ru-RU')+' ₽.';
+    }
+    [roomsInput,motionInput,waterInput].forEach(i=>i.addEventListener('input',recalc));
+    recalc();
+
+    const calcToForm=document.getElementById('calcToForm');
+    calcToForm.addEventListener('click',()=>{
+        const msg=document.getElementById('message');
+        const text='Интересует комплект: комнат — '+roomsInput.value+
+            ', датчиков движения — '+motionInput.value+
+            ', датчиков протечки — '+waterInput.value+
+            '. Ориентировочная стоимость '+calcTotal.textContent+'.';
+        if(!msg.value.trim()) msg.value=text;
+        else msg.value+='\n\n'+text;
+        const el=document.getElementById('contacts');
+        const y=el.getBoundingClientRect().top+window.pageYOffset-80;
+        window.scrollTo({top:y,behavior:'smooth'});
+    });
+
+    // REVIEWS slider
+    const reviews=[
+        {
+            text:'Ставили систему в новостройку. Монтаж занял меньше дня, проводов почти не видно. Несколько раз выручали датчики протечки — воду перекрыли до того, как всё затопило.',
+            author:'Александр, 34 года',
+            meta:'Тариф «Комфорт», квартира 62 м²'
+        },
+        {
+            text:'Очень удобно, что можно ставить и снимать с охраны через приложение. Родителей добавили как гостей — они тоже получают уведомления, когда дети приходят из школы.',
+            author:'Мария, 29 лет',
+            meta:'Тариф «Старт», семейная квартира'
+        },
+        {
+            text:'Подключили камеры и датчики дыма в загородном доме. Даже когда мы за границей, видно, что всё в порядке. Пару раз отключали электричество — система продолжала работать.',
+            author:'Игорь, 41 год',
+            meta:'Тариф «Максимум», дом 180 м²'
+        }
+    ];
+    const reviewText=document.getElementById('reviewText');
+    const reviewAuthor=document.getElementById('reviewAuthor');
+    const reviewMeta=document.getElementById('reviewMeta');
+    const reviewNav=document.getElementById('reviewNav');
+    let reviewIndex=0;
+    let reviewTimer;
+
+    function renderReview(i){
+        const r=reviews[i];
+        reviewText.textContent='“'+r.text+'”';
+        reviewAuthor.textContent=r.author;
+        reviewMeta.textContent=r.meta;
+        document.querySelectorAll('.review-dot').forEach((d,idx)=>d.classList.toggle('active',idx===i));
+    }
+    reviews.forEach((_,i)=>{
+        const dot=document.createElement('button');
+        dot.type='button';
+        dot.className='review-dot'+(i===0?' active':'');
+        dot.addEventListener('click',()=>{
+            reviewIndex=i;
+            renderReview(i);
+            startReviewAuto();
+        });
+        reviewNav.appendChild(dot);
+    });
+    function startReviewAuto(){
+        clearInterval(reviewTimer);
+        reviewTimer=setInterval(()=>{
+            reviewIndex=(reviewIndex+1)%reviews.length;
+            renderReview(reviewIndex);
+        },7000);
+    }
+    renderReview(0);
+    startReviewAuto();
+
+    // FAQ accordion
+    document.getElementById('faqList').addEventListener('click',e=>{
+        const header=e.target.closest('.faq-header');
+        if(!header) return;
+        const item=header.parentElement;
+        const body=item.querySelector('.faq-body');
+        const isOpen=item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i=>{
+            i.classList.remove('open');
+            const b=i.querySelector('.faq-body');
+            b.style.maxHeight=null;
+            i.querySelector('.faq-toggle').textContent='+';
+        });
+        if(!isOpen){
+            item.classList.add('open');
+            body.style.maxHeight=body.scrollHeight+'px';
+            item.querySelector('.faq-toggle').textContent='–';
+        }
+    });
+
+    // FORM VALIDATION
+    const form=document.getElementById('requestForm');
+    const submitBtn=document.getElementById('submitFormBtn');
+
+    function setError(id,msg){
+        const input=document.getElementById(id);
+        const err=document.getElementById(id+'Error');
+        if(input) input.classList.add('field-error');
+        if(err) err.textContent=msg||'';
+    }
+    function clearError(id){
+        const input=document.getElementById(id);
+        const err=document.getElementById(id+'Error');
+        if(input) input.classList.remove('field-error');
+        if(err) err.textContent='';
+    }
+    ['name','phone','email','city','rooms','plan','message'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.addEventListener('input',()=>clearError(id));
+    });
+
+    form.addEventListener('submit',e=>{
+        e.preventDefault();
+        let valid=true;
+        const name=form.name.value.trim();
+        const phone=form.phone.value.trim();
+        const email=form.email.value.trim();
+        const message=form.message.value.trim();
+
+        if(!name){
+            setError('name','Укажите ваше имя');
+            valid=false;
+        }else if(name.length<2){
+            setError('name','Имя слишком короткое');
+            valid=false;
+        }
+        const phoneDigits=phone.replace(/[^\d+]/g,'');
+        if(phoneDigits.length<6){
+            setError('phone','Введите корректный телефон');
+            valid=false;
+        }
+        if(email){
+            const re=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!re.test(email)){
+                setError('email','Некорректный e‑mail');
+                valid=false;
+            }
+        }
+        if(!message){
+            setError('message','Кратко опишите задачу');
+            valid=false;
+        }
+        if(!valid) return;
+
+        submitBtn.disabled=true;
+        submitBtn.textContent='Отправляем…';
+        setTimeout(()=>{
+            submitBtn.disabled=false;
+            submitBtn.textContent='Отправить заявку';
+            form.reset();
+            openModal('Заявка отправлена',
+                'Спасибо! Мы получили вашу заявку. Инженер свяжется с вами в ближайшее время, чтобы уточнить детали и предложить оптимальное решение по безопасности дома.');
+        },1000);
+    });
+
+    // HEADER calc modal (отдельное сообщение)
+    document.getElementById('openCalcModal').addEventListener('click',()=>{
+        openModal('Рассчитать стоимость',
+            'Заполните краткую форму внизу страницы или воспользуйтесь калькулятором в блоке «Тарифы и комплектующие». Мы подготовим для вас персональное коммерческое предложение.');
+        const el=document.getElementById('pricing');
+        const y=el.getBoundingClientRect().top+window.pageYOffset-80;
+        window.scrollTo({top:y,behavior:'smooth'});
+    });
+</script>
+
+</body>
+</html>
