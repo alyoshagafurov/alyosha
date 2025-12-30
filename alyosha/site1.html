@@ -770,229 +770,35 @@ footer{
         
 @media (max-width: 480px) {
 
-/* ===== HEADER ===== */
-header{
-    height: 60px;
-}
+  /* === масштаб всего сайта === */
+  html {
+    font-size: 95%;
+  }
 
-.logo{
-    width: 60px;
-}
+  body {
+    zoom: 0.85;
+  }
 
-header h1{
-    font-size: 10px;
-}
-
-header p{
-    font-size: 7px;
-}
-
-.burger{
-    top: 18px;
+  /* === мелкие точечные правки (НЕ layout) === */
+  .burger{
     right: 20px;
-}
+  }
 
-/* ===== MENU ===== */
-.menu{
-    width: 160px;
-    padding: 15px;
-}
+  .menu.active{
+    right: 20px;
+  }
 
-.menu a{
-    font-size: 12px;
-}
+  .group-2 img{
+    width: 260px;
+  }
 
-/* ===== HERO ===== */
-.sec{
-    flex-direction: column;
-    height: auto;
-}
-
-.group-1,
-.group-2{
-    width: 100%;
-}
-
-.group-1 .text{
-    right: 0;
-    bottom: 40px;
-    text-align: center;
-}
-
-.group-1 .text h1{
-    font-size: 20px;
-}
-
-.group-1 .text p{
-    font-size: 9px;
-}
-
-.group-1 .text a{
-    font-size: 9px;
-}
-
-.group-1 nav{
-    right: 0;
-    top: 40px;
-    width: 100%;
-    justify-content: space-around;
-}
-
-/* ===== IMAGE HERO ===== */
-.group-2{
-    height: 300px;
-}
-
-.group-2 img{
-    width: 240px;
-    right: 0;
-    top: 60px;
-}
-
-/* ===== SECTION 1 ===== */
-.sec-1{
-    height: auto;
-}
-
-.text2{
-    margin: 20px;
-    width: auto;
-}
-
-.text2 h1{
-    font-size: 13px;
-}
-
-.text2 p{
-    font-size: 9px;
-}
-
-/* ===== SLIDER ===== */
-.tea-pot{
-    width: 100%;
-    left: 0;
-    top: 200px;
-    gap: 15px;
-}
-
-.tea-pot span{
-    min-width: 130px;
-}
-
-.tea-pot span img{
+  .tea-pot span img{
     width: 90px;
-}
+  }
 
-.tea-pot span h2{
-    font-size: 11px;
-}
-
-.tea-pot span p{
-    font-size: 8px;
-}
-
-/* ===== ARROWS ===== */
-.sec-1 .icons{
-    top: 470px;
-    right: 0;
-    justify-content: center;
-    width: 100%;
-}
-
-/* ===== SECTION 2 ===== */
-.sec-2{
-    flex-direction: column;
-    height: auto;
-}
-
-.text3{
-    margin: 20px;
-}
-
-.text3 h1{
-    font-size: 16px;
-}
-
-.text3 p{
-    font-size: 8px;
-}
-
-.blok{
-    left: 0;
-    margin-top: 20px;
-}
-
-.tea{
-    right: 0;
-    width: 180px;
-    margin-top: 20px;
-}
-
-/* ===== SECTION 3 ===== */
-.sec-3{
-    flex-direction: column-reverse;
-    height: auto;
-}
-
-.text4{
-    margin: 20px;
-}
-
-.text4 h1{
-    font-size: 16px;
-}
-
-.text4 p{
-    font-size: 8px;
-}
-
-.blok2{
-    left: 0;
-    margin-top: 20px;
-}
-
-.tea3{
-    right: 0;
-    width: 180px;
-}
-
-/* ===== NEWSLETTER ===== */
-.sec-4{
-    padding: 20px 0;
-}
-
-.text5{
-    width: 90%;
-}
-
-.text5 p{
+  footer{
     font-size: 9px;
-}
-
-.input-email input{
-    width: 220px;
-}
-
-.btn-send button{
-    top: 0;
-}
-
-/* ===== FOOTER ===== */
-footer{
-    flex-direction: column;
-    gap: 10px;
-    height: auto;
-}
-
-.last-nav nav{
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.last-nav nav a{
-    font-size: 8px;
-    margin: 5px;
-}
+  }
 
 }
     </style>
