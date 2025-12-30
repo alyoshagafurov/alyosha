@@ -770,135 +770,111 @@ footer{
         @media (max-width: 480px) {
 
   /* ===== HERO ===== */
-  .sec{
-    height: auto;
-    align-items: center;
-  }
-
-  .group-1,
-  .group-2{
-    width: 50%;
-  }
-
   .group-1 .text{
-    right: 0;
-    bottom: 0;
-    line-height: 26px;
-    text-align: center;
+    right: -110px;   /* было -188 */
+    bottom: 40px;    /* было 80 */
+    line-height: 22px;
+  }
+
+  .group-1 .text h1{
+    font-size: 20px;
+  }
+
+  .group-1 .text p{
+    font-size: 9px;
+  }
+
+  .group-1 .text a{
+    font-size: 9px;
   }
 
   .group-1 nav{
-    right: 0;
-    top: 220px;
-    width: 220px;
-    margin: 0 auto;
+    right: -110px;   /* было -158 */
+    top: 200px;
+    width: 180px;
   }
 
   .group-2 img{
-    right: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 260px;
+    width: 240px;
+    right: 60px;     /* было 120 */
+    top: 170px;
   }
 
   /* ===== SECTION 1 ===== */
-  .sec-1{
-    height: auto;
-  }
-
   .text2{
-    margin: 40px auto;
-    width: 90%;
-    align-items: center;
-    text-align: center;
     top: 0;
+    margin: 40px;
   }
 
   .tea-pot{
-    left: 0;
-    top: 200px;
-    width: 100%;
-    justify-content: flex-start;
+    top: 240px;      /* было 300 */
+    gap: 30px;       /* было 50 */
+  }
+
+  .tea-pot span{
+    min-width: 140px;
+  }
+
+  .tea-pot span img{
+    width: 90px;
   }
 
   .sec-1 .icons{
+    top: 480px;      /* было 570 */
     right: 0;
-    width: 100%;
     justify-content: center;
   }
 
   /* ===== SECTION 2 ===== */
-  .sec-2{
-    height: auto;
-  }
-
   .text3{
-    margin: 40px auto;
-    width: 90%;
-    text-align: center;
+    margin-left: 60px;  /* было 150 */
   }
 
   .blok{
-    left: 0;
-    margin: 20px auto;
-    align-items: center;
+    left: 140px;        /* было 260 */
+    width: 180px;
+    height: 220px;
   }
 
   .tea{
-    right: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 120px;      /* было 200 */
     width: 180px;
   }
 
   /* ===== SECTION 3 ===== */
-  .sec-3{
-    height: auto;
-  }
-
   .blok2{
-    left: 0;
-    margin: 20px auto;
+    left: 90px;        /* было 160 */
+    width: 180px;
+    height: 220px;
   }
 
   .tea3{
-    right: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 40px;       /* было 80 */
     width: 180px;
   }
 
   .text4{
-    margin: 40px auto;
-    width: 90%;
-    text-align: center;
+    margin-right: 40px; /* было 80 */
   }
 
   /* ===== NEWSLETTER ===== */
-  .sec-4{
-    height: auto;
-    padding: 40px 0;
+  .text5{
+    width: 70%;
   }
 
-  .text5{
-    width: 90%;
-    text-align: center;
+  .input-email input{
+    width: 220px;
   }
 
   .btn-send button{
-    right: 0;
     top: 0;
-  }
-
-  /* ===== FOOTER ===== */
-  footer{
-    flex-direction: column;
-    gap: 10px;
-    height: auto;
-    padding: 20px 0;
+    right: 0;
   }
 
 }
+
+        
+       
     </style>
 </head>
 <body>
