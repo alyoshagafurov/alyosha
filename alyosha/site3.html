@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maison Royale — Интернет‑бутик нишевой парфюмерии</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-main: #020403;
+      --accent-gold: #d4af37;
+      --text-main: #f5f1e7;
+      --text-muted: #b1a899;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --radius-lg: 22px;
+      --transition-fast: 0.35s ease;
+      --transition-slow: 0.7s ease;
+      --container-width: 1180px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      height:100%;
+      scroll-behavior:smooth;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e2b25 0, #050908 55%, #020403 100%);
+      color:var(--text-main);
+      font-family:"Montserrat",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      overflow-x:hidden;
+    }
+
+    .page { position:relative; min-height:100vh; }
+
+    .luxury-noise {
+      pointer-events:none;
+      position:fixed;
+      inset:0;
+      background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+      opacity:0.045;
+      mix-blend-mode:soft-light;
+      z-index:1;
+    }
+
+    .container {
+      position:relative;
+      z-index:2;
+      max-width:var(--container-width);
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(18px);
+      background:linear-gradient(to bottom,rgba(5,9,8,0.97),rgba(5,9,8,0.7) 70%,transparent);
+      border-bottom:1px solid rgba(212,175,55,0.08);
+    }
+    .nav {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 0 14px;
+    }
+    .nav-left{display:flex;align-items:center;gap:14px;}
+    .brand-mark{
+      width:40px;height:40px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.8);
+      box-shadow:0 0 0 1px rgba(212,175,55,0.25),0 8px 18px rgba(0,0,0,0.85);
+      display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(circle at 30% 0%,rgba(255,255,255,0.35) 0,transparent 35%),
+                 linear-gradient(135deg,#2a342a,#171f1a 55%,#362613 100%);
+      font-family:"Cormorant Garamond",serif;
+      font-size:20px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+    }
+    .brand-text{display:flex;flex-direction:column;gap:2px;}
+    .brand-name{
+      font-family:"Cormorant Garamond",serif;
+      font-size:17px;letter-spacing:0.28em;text-transform:uppercase;
+    }
+    .brand-subline{
+      font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-muted);
+    }
+    .nav-links{display:flex;align-items:center;gap:22px;}
+    .nav-link{
+      font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+      color:var(--text-muted);cursor:pointer;position:relative;
+    }
+    .nav-link::after{
+      content:"";position:absolute;left:0;bottom:-4px;width:0;height:1px;
+      background:linear-gradient(90deg,transparent,var(--accent-gold),transparent);
+      transition:width 0.3s ease;
+    }
+    .nav-link:hover{color:var(--text-main);}
+    .nav-link:hover::after{width:100%;}
+    .nav-cta{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 18px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.32);
+      background:linear-gradient(120deg,rgba(14,27,21,0.9),rgba(33,40,32,0.95));
+      color:var(--accent-gold);font-size:10px;font-weight:500;
+      letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+      box-shadow:0 10px 30px rgba(0,0,0,0.8);transition:var(--transition-fast);
+    }
+    .nav-cta-icon{
+      width:16px;height:16px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.6);
+      display:flex;align-items:center;justify-content:center;font-size:10px;
+    }
+    .nav-cta:hover{transform:translateY(-1px);box-shadow:0 18px 40px rgba(0,0,0,0.9);}
+
+    /* ===== HERO ===== */
+    .hero{padding:56px 0 70px;}
+    .hero-inner{
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(0,0.9fr);
+      gap:52px;align-items:center;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:5px 14px 5px 6px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.25);
+      background:rgba(5,10,8,0.94);
+      box-shadow:0 10px 30px rgba(0,0,0,0.75);
+      margin-bottom:22px;
+    }
+    .hero-badge-dot{
+      width:20px;height:20px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.6);
+      display:flex;align-items:center;justify-content:center;font-size:10px;
+      background:radial-gradient(circle at 30% 0%,rgba(255,255,255,0.5) 0,transparent 40%),
+                 linear-gradient(140deg,#2b3c31,#171f1a);
+    }
+    .hero-badge-text{
+      font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);
+    }
+    .hero-title{
+      font-family:"Cormorant Garamond",serif;
+      font-size:clamp(40px,4vw,54px);
+      line-height:1.08;letter-spacing:0.16em;text-transform:uppercase;
+      margin-bottom:16px;
+    }
+    .hero-title span{display:block;}
+    .hero-emblem-line{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+    .hero-emblem{
+      width:34px;height:34px;border-radius:50%;
+      border:1px solid rgba(212,175,55,0.7);
+      display:flex;align-items:center;justify-content:center;
+      font-family:"Cormorant Garamond",serif;font-size:17px;
+    }
+    .hero-sub{font-size:15px;max-width:480px;color:var(--text-muted);line-height:1.6;}
+    .hero-meta{
+      display:flex;flex-wrap:wrap;gap:16px;
+      margin:26px 0 30px;font-size:11px;
+      letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);
+    }
+    .hero-meta-item{display:flex;align-items:center;gap:8px;}
+    .hero-meta-dot{
+      width:6px;height:6px;border-radius:999px;
+      background:var(--accent-gold);box-shadow:0 0 10px rgba(212,175,55,0.9);
+    }
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+    .btn-gold{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:11px 26px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.5);
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.22) 0,transparent 35%),
+                 linear-gradient(125deg,#2e3a2f,#3d3220 55%,#5b4722 100%);
+      color:#fdf7e4;font-size:11px;font-weight:600;
+      letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+      box-shadow:0 14px 35px rgba(0,0,0,0.85);transition:var(--transition-fast);
+    }
+    .btn-gold span{font-size:15px;}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(0,0,0,0.95);}
+    .btn-ghost{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:10px 20px;border-radius:999px;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(5,10,8,0.85);
+      color:var(--text-muted);font-size:10px;
+      letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+      transition:var(--transition-fast);
+    }
+    .btn-ghost:hover{color:var(--text-main);border-color:rgba(212,175,55,0.6);}
+
+    .hero-visual{position:relative;}
+
+    /* новый минималистичный флакон */
+    .hero-frame{
+      border-radius:26px;padding:1px;
+      background:linear-gradient(140deg,rgba(255,255,255,0.08),rgba(212,175,55,0.7));
+      box-shadow:0 28px 80px rgba(0,0,0,0.95);
+    }
+    .hero-card{
+      position:relative;border-radius:24px;overflow:hidden;
+      padding:20px 18px 22px;
+      background:
+        radial-gradient(circle at 0 0,rgba(255,255,255,0.1) 0,transparent 55%),
+        radial-gradient(circle at 50% 120%,rgba(212,175,55,0.35) 0,transparent 70%),
+        linear-gradient(160deg,#111818,#050807);
+      min-height:320px;
+    }
+    .hero-card-label{
+      position:static;display:inline-block;margin-bottom:12px;
+      padding:4px 10px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.55);
+      background:rgba(5,9,7,0.9);
+      font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .hero-card-image-wrap{
+      position:relative;margin:0 0 18px 0;
+      padding:18px 14px 16px;border-radius:20px;
+      background:
+        radial-gradient(circle at 0 0,rgba(255,255,255,0.18) 0,transparent 45%),
+        linear-gradient(145deg,#181f1d,#050707);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+    .hero-card-glow{
+      position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(circle at 50% 0%,rgba(255,255,255,0.2) 0,transparent 55%),
+        radial-gradient(circle at 50% 120%,rgba(212,175,55,0.35) 0,transparent 75%);
+      opacity:0.8;mix-blend-mode:screen;
+    }
+    .hero-bottle{
+      position:relative;z-index:1;margin:0 auto;
+      width:72%;aspect-ratio:3/5;border-radius:30px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,0.75) 0,rgba(255,255,255,0.2) 18%,rgba(0,0,0,0.08) 55%,rgba(0,0,0,0.4) 100%),
+        linear-gradient(150deg,#f3dfb8 0,#c9a96d 50%,#8b6a34 100%);
+      box-shadow:0 16px 32px rgba(0,0,0,0.85),inset 0 0 0 1px rgba(255,255,255,0.65);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .hero-bottle::after{
+      content:"Maison Royale";
+      position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+      padding:4px 10px;border-radius:999px;
+      background:rgba(12,14,12,0.9);
+      color:#f5f1e7;font-family:"Cormorant Garamond",serif;
+      font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+      border:1px solid rgba(255,255,255,0.45);
+    }
+    .hero-bottle::before{content:none;}
+    .hero-card-footer{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;margin-top:10px;padding-top:10px;
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .hero-card-notes{font-size:12px;color:var(--text-muted);}
+    .hero-card-notes strong{color:var(--text-main);}
+    .hero-card-price{text-align:right;}
+    .hero-card-price-main{
+      font-family:"Cormorant Garamond",serif;
+      font-size:19px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .hero-card-price-sub{font-size:10px;color:var(--text-muted);}
+
+    .hero-floating-seal{
+      position:absolute;right:-18px;bottom:-30px;
+      width:110px;height:110px;border-radius:50%;
+      border:1px solid rgba(212,175,55,0.6);
+      background:radial-gradient(circle at 20% 0%,rgba(255,255,255,0.2) 0,transparent 40%),
+                 linear-gradient(145deg,#1b231e,#3a2313);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 18px 45px rgba(0,0,0,0.9);
+    }
+    .hero-floating-seal-inner{
+      width:82px;height:82px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.6);
+      display:flex;align-items:center;justify-content:center;
+      font-family:"Cormorant Garamond",serif;
+      font-size:12px;text-transform:uppercase;letter-spacing:0.18em;
+      text-align:center;color:var(--accent-gold);padding:0 12px;
+    }
+
+    /* ===== SECTIONS / ABOUT ===== */
+    section{padding:70px 0;}
+    .section-label{
+      font-size:10px;letter-spacing:0.24em;text-transform:uppercase;
+      color:var(--text-muted);margin-bottom:8px;
+    }
+    .section-title{
+      font-family:"Cormorant Garamond",serif;
+      font-size:28px;letter-spacing:0.22em;text-transform:uppercase;
+      margin-bottom:20px;
+    }
+    .about-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(0,0.9fr);
+      gap:36px;align-items:flex-start;
+    }
+    .about-text{font-size:15px;line-height:1.8;color:var(--text-muted);}
+    .about-text p+p{margin-top:12px;}
+    .about-pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+    .about-pill{
+      padding:7px 12px;border-radius:999px;
+      background:rgba(10,18,14,0.9);
+      border:1px solid rgba(255,255,255,0.08);
+      font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);
+    }
+    .about-card{
+      border-radius:var(--radius-lg);
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.1) 0,transparent 45%),
+                 linear-gradient(145deg,#141e19,#050807);
+      border:1px solid var(--border-soft);
+      box-shadow:var(--shadow-soft);
+      padding:20px 18px 16px;
+      display:flex;flex-direction:column;gap:16px;
+    }
+    .about-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .about-label{
+      font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);
+    }
+    .about-value{
+      font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .about-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);}
+    .about-note{font-size:12px;color:var(--text-muted);line-height:1.6;}
+
+    .btn-small{
+      padding:9px 16px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.7);
+      background:rgba(7,11,9,0.95);
+      color:var(--accent-gold);font-size:9px;
+      letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      transition:var(--transition-fast);box-shadow:0 10px 25px rgba(0,0,0,0.8);
+    }
+    .btn-small span{font-size:12px;}
+    .btn-small:hover{
+      background:linear-gradient(135deg,#1b251f,#3e301c);
+      color:#fdf7e4;transform:translateY(-1px);
+      box-shadow:0 16px 32px rgba(0,0,0,0.9);
+    }
+
+    /* ===== CATALOG (на index только 3 лучших) ===== */
+    .catalog-header{
+      display:flex;justify-content:space-between;align-items:flex-end;
+      gap:20px;margin-bottom:22px;
+    }
+    .catalog-note{font-size:13px;color:var(--text-muted);max-width:380px;line-height:1.6;}
+    .catalog-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:24px;
+    }
+    .perfume-card{
+      border-radius:var(--radius-lg);
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.1) 0,transparent 45%),
+                 linear-gradient(145deg,#131b17,#050807);
+      border:1px solid var(--border-soft);
+      box-shadow:var(--shadow-soft);
+      padding:16px 16px 18px;
+      overflow:hidden;transition:var(--transition-fast);
+    }
+    .perfume-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 22px 55px rgba(0,0,0,0.95);
+      border-color:rgba(212,175,55,0.45);
+    }
+    .perfume-image-wrap{
+      position:relative;border-radius:calc(var(--radius-lg) - 8px);
+      overflow:hidden;height:200px;margin-bottom:14px;
+      background:linear-gradient(135deg,#262f2a,#201712);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .perfume-image{
+      width:78%;height:78%;border-radius:24px;
+      border:1px solid rgba(255,255,255,0.4);
+      background:linear-gradient(180deg,rgba(255,255,255,0.5) 0,rgba(255,255,255,0.08) 22%,rgba(0,0,0,0.15) 50%,rgba(255,255,255,0.2) 100%),
+                 linear-gradient(145deg,#f3ddc0,#c5a979 50%,#896b3f 100%);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,0.45),0 12px 28px rgba(0,0,0,0.8);
+    }
+    .perfume-tag{
+      position:absolute;top:10px;left:10px;padding:4px 10px;
+      border-radius:999px;background:rgba(3,6,5,0.9);
+      border:1px solid rgba(212,175,55,0.6);
+      font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .perfume-title{
+      font-family:"Cormorant Garamond",serif;
+      font-size:20px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:6px;
+    }
+    .perfume-sub{
+      font-size:12px;color:var(--text-muted);
+      margin-bottom:10px;text-transform:uppercase;letter-spacing:0.14em;
+    }
+    .perfume-notes{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;}
+    .perfume-variations{font-size:12px;color:var(--text-muted);margin-bottom:10px;}
+    .perfume-variations strong{color:var(--text-main);}
+    .perfume-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;}
+    .perfume-price-main{
+      font-family:"Cormorant Garamond",serif;
+      font-size:18px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .perfume-price-note{font-size:11px;color:var(--text-muted);}
+
+    /* кнопка "Смотреть все ароматы" */
+    .catalog-more-wrap{
+      margin-top:28px;
+      display:flex;
+      justify-content:center;
+    }
+    .btn-outline-gold{
+      padding:11px 28px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.7);
+      background:transparent;
+      color:var(--accent-gold);
+      font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+      text-decoration:none;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.7);
+      transition:background 0.35s ease,color 0.35s ease,box-shadow 0.35s ease,transform 0.35s ease;
+    }
+    .btn-outline-gold span{font-size:14px;}
+    .btn-outline-gold:hover{
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.18) 0,transparent 45%),
+                 linear-gradient(135deg,#1b251f,#3e301c);
+      color:#fdf7e4;transform:translateY(-1px);
+      box-shadow:0 18px 40px rgba(0,0,0,0.9);
+    }
+
+    /* ===== DELIVERY ===== */
+    .info-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr);
+      gap:32px;align-items:stretch;
+    }
+    .info-step-list{display:flex;flex-direction:column;gap:16px;}
+    .info-step{display:flex;gap:14px;align-items:flex-start;}
+    .info-step-index{
+      width:24px;height:24px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.75);
+      display:flex;align-items:center;justify-content:center;
+      font-size:11px;color:var(--accent-gold);flex-shrink:0;margin-top:3px;
+    }
+    .info-step-title{
+      font-size:12px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:2px;
+    }
+    .info-step-text{font-size:13px;color:var(--text-muted);line-height:1.7;}
+    .info-card{
+      border-radius:var(--radius-lg);padding:20px 18px 16px;
+      border:1px solid rgba(212,175,55,0.3);
+      background:radial-gradient(circle at 0 0,rgba(255,255,255,0.12) 0,transparent 45%),
+                 linear-gradient(145deg,#141d17,#070a08);
+      box-shadow:var(--shadow-soft);
+      display:flex;flex-direction:column;gap:14px;
+    }
+    .info-badge{
+      align-self:flex-start;padding:4px 11px;border-radius:999px;
+      border:1px solid rgba(212,175,55,0.6);
+      font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .info-city{
+      font-size:13px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);
+    }
+    .info-hl{
+      font-family:"Cormorant Garamond",serif;
+      font-size:22px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent-gold);
+    }
+    .info-note{font-size:13px;color:var(--text-muted);line-height:1.7;}
+
+    /* ===== FOOTER ===== */
+    footer{
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding:22px 0 26px;margin-top:40px;
+      font-size:11px;color:var(--text-muted);
+    }
+    .footer-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;flex-wrap:wrap;
+    }
+    .footer-links{display:flex;gap:16px;flex-wrap:wrap;}
+    .footer-link{
+      text-decoration:none;color:var(--text-muted);
+      font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+    }
+    .footer-link:hover{color:var(--text-main);}
+
+    /* ===== REVEAL ===== */
+    .reveal{
+      opacity:0;
+      transform:translate3d(0,30px,0);
+      transition:opacity var(--transition-slow),transform var(--transition-slow);
+    }
+    .reveal.visible{opacity:1;transform:translate3d(0,0,0);}
+
+    /* ===== PARALLAX ===== */
+    [data-parallax]{will-change:transform;transform:translate3d(0,0,0);}
+
+    /* ===== MEDIA ===== */
+    @media (max-width:1200px){
+      .hero-inner,.about-grid,.info-grid{
+        grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      }
+      .hero{padding-top:46px;}
+      .hero-title{font-size:38px;}
+      .catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+    @media (max-width:992px){
+      .nav-links{display:none;}
+      .hero-inner{grid-template-columns:minmax(0,1fr);gap:38px;}
+      .hero-visual{max-width:420px;margin:0 auto;}
+      .hero-floating-seal{display:none;}
+      .about-grid,.info-grid{grid-template-columns:minmax(0,1fr);}
+    }
+    @media (max-width:768px){
+      .container{padding:0 16px;}
+      header .nav{padding:10px 0 8px;}
+      .brand-mark{width:32px;height:32px;font-size:15px;}
+      .brand-name{font-size:14px;letter-spacing:0.22em;}
+      .brand-subline{font-size:9px;letter-spacing:0.18em;}
+
+      .hero{padding:32px 0 40px;}
+      .hero-badge{margin:0 auto 18px;transform:scale(0.9);}
+      .hero-badge-text{font-size:9px;}
+      .hero-title{font-size:26px;letter-spacing:0.18em;text-align:center;}
+      .hero-emblem-line{flex-direction:column;align-items:center;text-align:center;}
+      .hero-sub{max-width:100%;font-size:13px;}
+      .hero-meta{justify-content:center;text-align:center;font-size:9px;margin:18px 0 24px;}
+      .hero-actions{justify-content:center;}
+      .hero-card{min-height:auto;padding:14px 14px 18px;}
+      .hero-card-footer{flex-direction:column;align-items:flex-start;}
+
+      section{padding:46px 0;}
+      .section-label,.section-title{text-align:center;}
+      .section-title{font-size:22px;letter-spacing:0.18em;}
+
+      .about-text{text-align:center;font-size:13px;}
+      .about-pill-row{justify-content:center;}
+      .about-card{padding:16px 14px 14px;}
+      .about-row{flex-direction:column;align-items:center;text-align:center;gap:6px;}
+      .about-note{text-align:center;}
+      .about-card .btn-small{width:100%;align-self:center;justify-content:center;}
+
+      .catalog-header{flex-direction:column;align-items:center;text-align:center;}
+      .catalog-note{max-width:100%;font-size:12px;}
+      .catalog-grid{grid-template-columns:minmax(0,1fr);gap:18px;}
+      .perfume-card{padding:14px 14px 16px;}
+      .perfume-image-wrap{height:170px;}
+      .perfume-title,.perfume-sub,.perfume-notes,.perfume-variations{text-align:center;}
+      .perfume-footer{flex-direction:column;align-items:center;text-align:center;}
+      .btn-small{width:100%;}
+      .catalog-more-wrap{margin-top:20px;}
+      .btn-outline-gold{width:100%;}
+
+      .info-step{align-items:center;}
+      .info-card{text-align:center;}
+      .info-badge{align-self:center;}
+      .info-card .btn-gold{width:100%;align-self:center;justify-content:center;}
+
+      footer{padding:18px 0 22px;margin-top:24px;}
+      .footer-inner{flex-direction:column-reverse;align-items:center;text-align:center;gap:10px;}
+      .footer-links{justify-content:center;}
+
+      [data-parallax]{transform:translate3d(0,0,0) !important;}
+      .reveal{opacity:1 !important;transform:translate3d(0,0,0) !important;}
+    }
+  </style>
+</head>
+<body>
+<div class="luxury-noise"></div>
+
+<div class="page">
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <div class="nav-left">
+          <div class="brand-mark">M</div>
+          <div class="brand-text">
+            <div class="brand-name">Maison Royale</div>
+            <div class="brand-subline">Fine Fragrances · Душанбе</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <div class="nav-link" data-scroll-to="#about">О бренде</div>
+          <div class="nav-link" data-scroll-to="#catalog">Ароматы</div>
+          <div class="nav-link" data-scroll-to="#delivery">Доставка</div>
+          <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="nav-cta">
+            <span class="nav-cta-icon">TG</span>
+            В Telegram
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy reveal">
+        <div class="hero-badge" data-parallax data-parallax-speed="0.5">
+          <div class="hero-badge-dot">★</div>
+          <div class="hero-badge-text">Нишевая парфюмерия · Только Душанбе</div>
+        </div>
+
+        <h1 class="hero-title">
+          <span>Интернет‑бутик</span>
+          <span>ароматов в стиле</span>
+          <span>old money</span>
+        </h1>
+
+        <div class="hero-emblem-line">
+          <div class="hero-emblem">MR</div>
+          <div class="hero-sub">
+            Maison Royale — тщательно отобранные ароматы с характером: для тех, кто ценит тишину роскоши, а не её громкость. Оформление заказа — через Telegram, доставка по Душанбе.
+          </div>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <div class="hero-meta-dot"></div>
+            нишевая и селективная парфюмерия
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-dot"></div>
+            оригиналы, без витрин и наценок
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="btn-gold">
+            В Telegram <span>↗</span>
+          </a>
+          <a href="#catalog" class="btn-ghost">Смотреть ароматы</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="hero-frame" data-parallax data-parallax-speed="0.8">
+          <div class="hero-card">
+            <div class="hero-card-label">signature collection</div>
+            <div class="hero-card-image-wrap">
+              <div class="hero-card-glow"></div>
+              <div class="hero-bottle"></div>
+            </div>
+            <div class="hero-card-footer">
+              <div class="hero-card-notes">
+                <strong>Верх:</strong> бергамот, нероли<br />
+                <strong>Сердце:</strong> ирис, кожа<br />
+                <strong>База:</strong> сандал, амбра
+              </div>
+              <div class="hero-card-price">
+                <div class="hero-card-price-main">от 650 c.</div>
+                <div class="hero-card-price-sub">по запросу в Telegram</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-floating-seal" data-parallax data-parallax-speed="1.1">
+          <div class="hero-floating-seal-inner">
+            Curated<br/>for<br/>Dushanbe
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label reveal">о maison royale</div>
+      <div class="section-title reveal">Тихая роскошь в каждом флаконе</div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Maison Royale — интернет‑бутик парфюмерии без лишнего шума и показной роскоши. Мы выбираем ароматы, которые выглядят и звучат так, как дорогое винтажное кашемировое пальто: сдержанно, аристократично и немодно‑модно.
+          </p>
+          <p>
+            У нас нет офлайн‑адреса и витрин — только тщательно отобранные композиции и личное сопровождение в Telegram. Это позволяет сохранять честные цены и уделять максимум внимания каждому клиенту.
+          </p>
+          <div class="about-pill-row">
+            <div class="about-pill">old money эстетика</div>
+            <div class="about-pill">подбор по настроению</div>
+            <div class="about-pill">оригинальные позиции</div>
+          </div>
+        </div>
+
+        <div class="about-card reveal">
+          <div class="about-row">
+            <div class="about-label">Формат</div>
+            <div class="about-value">онлайн‑бутик</div>
+          </div>
+          <div class="about-divider"></div>
+          <div class="about-row">
+            <div class="about-label">Город</div>
+            <div class="about-value">Душанбе</div>
+          </div>
+          <div class="about-divider"></div>
+          <div class="about-row">
+            <div class="about-label">Как заказать</div>
+            <div class="about-value">только через telegram</div>
+          </div>
+          <div class="about-divider"></div>
+          <div class="about-note">
+            Напишите нам в Telegram — подберём аромат под ваш образ жизни, гардероб и характер: будь то университетский campus‑look, строгий деловой стиль или поздние вечерние ужины.
+          </div>
+          <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="btn-small">
+            Написать в Telegram <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG: 3 лучших аромата -->
+  <section id="catalog">
+    <div class="container">
+      <div class="catalog-header">
+        <div>
+          <div class="section-label reveal">ароматы</div>
+          <div class="section-title reveal">три signature‑аромата</div>
+        </div>
+        <div class="catalog-note reveal">
+          Это наши ключевые ароматы, с которых стоит начать знакомство с Maison Royale. Полный каталог и редкие позиции смотрите на отдельной странице.
+        </div>
+      </div>
+
+      <div class="catalog-grid">
+        <!-- 1 -->
+        <article class="perfume-card reveal">
+          <div class="perfume-image-wrap" data-parallax data-parallax-speed="0.6">
+            <div class="perfume-tag">унисекс</div>
+            <div class="perfume-image"></div>
+          </div>
+          <h3 class="perfume-title">Royal Library</h3>
+          <div class="perfume-sub">дымчатый, книжный, кожаный</div>
+          <div class="perfume-notes">
+            Ветхий кожаный переплёт, тёплое дерево и лёгкая дымка камина. Аромат для поздних вечеров и тех, кто всегда немного старше своего возраста.
+          </div>
+          <div class="perfume-variations">
+            <strong>Объёмы:</strong> 10 мл · 30 мл · 50 мл
+          </div>
+          <div class="perfume-footer">
+            <div>
+              <div class="perfume-price-main">от 450 c.</div>
+              <div class="perfume-price-note">точная цена по запросу в Telegram</div>
+            </div>
+            <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="btn-small">
+              Купить в Telegram <span>↗</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="perfume-card reveal">
+          <div class="perfume-image-wrap" data-parallax data-parallax-speed="0.7">
+            <div class="perfume-tag">женский</div>
+            <div
+              class="perfume-image"
+              style="background:
+                linear-gradient(180deg, rgba(255,255,255,.55) 0, rgba(255,255,255,.08) 22%, rgba(0,0,0,.12) 50%, rgba(255,255,255,.18) 100%),
+                linear-gradient(145deg,#f8e3f0,#d2a2c0 50%,#8b607c 100%);
+              "
+            ></div>
+          </div>
+          <h3 class="perfume-title">Silk Boulevard</h3>
+          <div class="perfume-sub">пудровый, цветочный, нежный</div>
+          <div class="perfume-notes">
+            Ирис, роза и белый мускус, как шёлковое платье на прогулке по вечернему бульвару. Аромат для аккуратного, но уверенного образа.
+          </div>
+          <div class="perfume-variations">
+            <strong>Объёмы:</strong> 5 мл · 30 мл · 50 мл
+          </div>
+          <div class="perfume-footer">
+            <div>
+              <div class="perfume-price-main">от 400 c.</div>
+              <div class="perfume-price-note">уточните наличие и цену</div>
+            </div>
+            <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="btn-small">
+              Купить в Telegram <span>↗</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="perfume-card reveal">
+          <div class="perfume-image-wrap" data-parallax data-parallax-speed="0.8">
+            <div class="perfume-tag">мужской</div>
+            <div
+              class="perfume-image"
+              style="background:
+                linear-gradient(180deg, rgba(255,255,255,.5) 0, rgba(255,255,255,.08) 22%, rgba(0,0,0,.15) 50%, rgba(255,255,255,.2) 100%),
+                linear-gradient(145deg,#dbe5f3,#9bb1ce 50%,#5a6c87 100%);
+              "
+            ></div>
+          </div>
+          <h3 class="perfume-title">Harvard Club</h3>
+          <div class="perfume-sub">древесный, свежий, интеллигентный</div>
+          <div class="perfume-notes">
+            Кедр, шалфей и мята. Чистый, собранный образ: рубашка без логотипов, хорошие часы и уверенность без лишних слов.
+          </div>
+          <div class="perfume-variations">
+            <strong>Объёмы:</strong> 10 мл · 50 мл · 100 мл
+          </div>
+          <div class="perfume-footer">
+            <div>
+              <div class="perfume-price-main">от 500 c.</div>
+              <div class="perfume-price-note">полная стоимость в Telegram</div>
+            </div>
+            <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="btn-small">
+              Купить в Telegram <span>↗</span>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Кнопка на полную страницу с духами -->
+      <div class="catalog-more-wrap">
+        <a href="parfume.html" class="btn-outline-gold">
+          смотреть все ароматы <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY -->
+  <section id="delivery">
+    <div class="container">
+      <div class="section-label reveal">доставка и заказ</div>
+      <div class="section-title reveal">весь сервис — в одном диалоге</div>
+
+      <div class="info-grid">
+        <div class="info-step-list reveal">
+          <div class="info-step">
+            <div class="info-step-index">1</div>
+            <div>
+              <div class="info-step-title">написать в telegram</div>
+              <div class="info-step-text">
+                Нажмите на любую кнопку «Купить в Telegram» или на кнопку в шапке сайта. Опишите, что вы ищете: повседневный аромат, вечерний, для подарка и т.д.
+              </div>
+            </div>
+          </div>
+          <div class="info-step">
+            <div class="info-step-index">2</div>
+            <div>
+              <div class="info-step-title">подбор и уточнение цены</div>
+              <div class="info-step-text">
+                Мы предложим несколько вариантов под ваш запрос, расскажем про ноты, стойкость и актуальную стоимость. Все цены — в сомони.
+              </div>
+            </div>
+          </div>
+          <div class="info-step">
+            <div class="info-step-index">3</div>
+            <div>
+              <div class="info-step-title">доставка по душанбе</div>
+              <div class="info-step-text">
+                Оформляем заказ и отправляем курьером по Душанбе. Время и стоимость доставки согласуем в чате. Самовывоза и офлайн‑магазина нет — это полностью онлайн‑формат.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card reveal" data-parallax data-parallax-speed="0.7">
+          <div class="info-badge">Только Душанбе</div>
+          <div class="info-city">доставка по городу</div>
+          <div class="info-hl">быстро и аккуратно</div>
+          <div class="info-note">
+            Мы ценим ваше время и отношение к деталям, поэтому каждый флакон проверяется и аккуратно упаковывается.
+            <br><br>
+            Без витрин, очередей и лишних вопросов — просто напишите нам в Telegram и получите свой аромат там, где вам удобно.
+          </div>
+          <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="btn-gold" style="margin-top:4px;align-self:flex-start;">
+            Оформить заказ <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footer-inner">
+      <div>© Maison Royale, Душанбе. Все права защищены.</div>
+      <div class="footer-links">
+        <a href="#about" class="footer-link">о бренде</a>
+        <a href="#catalog" class="footer-link">ароматы</a>
+        <a href="#delivery" class="footer-link">доставка</a>
+        <a href="https://t.me/ВАШ_TELEGRAM" target="_blank" class="footer-link">telegram</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- JS: smooth scroll, reveal, parallax (desktop only) -->
+<script>
+  // Плавный скролл
+  document.querySelectorAll("[data-scroll-to]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      const selector = el.getAttribute("data-scroll-to");
+      const target = document.querySelector(selector);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  const isMobile = () => window.innerWidth <= 768;
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll(".reveal");
+  let revealObserver = null;
+
+  function initReveal() {
+    if (isMobile()) {
+      revealEls.forEach((el) => el.classList.add("visible"));
+      if (revealObserver) {
+        revealObserver.disconnect();
+        revealObserver = null;
+      }
+      return;
+    }
+
+    revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+  }
+
+  // Parallax
+  const parallaxEls = document.querySelectorAll("[data-parallax]");
+
+  function handleParallax() {
+    if (isMobile()) {
+      parallaxEls.forEach((el) => {
+        el.style.transform = "translate3d(0,0,0)";
+      });
+      return;
+    }
+    const scrolled = window.scrollY || window.pageYOffset;
+    parallaxEls.forEach((el) => {
+      const speed = parseFloat(el.getAttribute("data-parallax-speed")) || 1;
+      const offset = (scrolled * speed) / 30;
+      el.style.transform = "translate3d(0," + offset + "px,0)";
+    });
+  }
+
+  window.addEventListener("scroll", handleParallax, { passive: true });
+  window.addEventListener("resize", () => {
+    initReveal();
+    handleParallax();
+  });
+
+  initReveal();
+  handleParallax();
+</script>
+</body>
+</html>
