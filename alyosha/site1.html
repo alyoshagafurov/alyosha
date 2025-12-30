@@ -768,220 +768,229 @@ footer{
 
        
         
-@media(max-width: 480px){
+@media (max-width: 480px) {
 
-.logo{
-    width: 70px;
+/* ===== HEADER ===== */
+header{
+    height: 60px;
 }
 
+.logo{
+    width: 60px;
+}
+
+header h1{
+    font-size: 10px;
+}
+
+header p{
+    font-size: 7px;
+}
+
+.burger{
+    top: 18px;
+    right: 20px;
+}
+
+/* ===== MENU ===== */
 .menu{
-    width: 180px;
-    padding: 20px ;
+    width: 160px;
+    padding: 15px;
 }
 
 .menu a{
-    font-size: 14px;
+    font-size: 12px;
+}
+
+/* ===== HERO ===== */
+.sec{
+    flex-direction: column;
+    height: auto;
+}
+
+.group-1,
+.group-2{
+    width: 100%;
 }
 
 .group-1 .text{
-    right: -188px;
-    bottom: 80px;
-    line-height: 25px;
+    right: 0;
+    bottom: 40px;
     text-align: center;
 }
 
-.group-1 .text br{
-    display: none;
+.group-1 .text h1{
+    font-size: 20px;
 }
 
 .group-1 .text p{
-    bottom: 0;
-    font-size: 10px;
-    color: #fff;
+    font-size: 9px;
 }
 
 .group-1 .text a{
-    color: #fff;
-}
-
-.group-1 .text h1{
-    font-size: 25px;
-    color: #fff;
+    font-size: 9px;
 }
 
 .group-1 nav{
-    right: -158px;
-    width: 200px;
-    top: 250px;
+    right: 0;
+    top: 40px;
+    width: 100%;
+    justify-content: space-around;
 }
 
-.group-1{
-    width: 50%;
-}
-
+/* ===== IMAGE HERO ===== */
 .group-2{
-    width: 50%;
+    height: 300px;
 }
 
 .group-2 img{
-    width: 300px;
-    top: 200px;
-    position: absolute;
-    right: 120px;
+    width: 240px;
+    right: 0;
+    top: 60px;
 }
 
-.black{
-    color: #000;
+/* ===== SECTION 1 ===== */
+.sec-1{
+    height: auto;
 }
 
 .text2{
-    position: relative;
-    top: 20px;
+    margin: 20px;
+    width: auto;
 }
 
 .text2 h1{
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .text2 p{
-    font-size: 8px;
+    font-size: 9px;
 }
 
-.tea-pot span {
-    min-width: 150px;
-    padding: 10px;
+/* ===== SLIDER ===== */
+.tea-pot{
+    width: 100%;
+    left: 0;
+    top: 200px;
+    gap: 15px;
 }
+
+.tea-pot span{
+    min-width: 130px;
+}
+
+.tea-pot span img{
+    width: 90px;
+}
+
 .tea-pot span h2{
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .tea-pot span p{
     font-size: 8px;
 }
 
-.tea-pot span img{
-    width: 100px;
+/* ===== ARROWS ===== */
+.sec-1 .icons{
+    top: 470px;
+    right: 0;
+    justify-content: center;
+    width: 100%;
+}
+
+/* ===== SECTION 2 ===== */
+.sec-2{
+    flex-direction: column;
+    height: auto;
 }
 
 .text3{
-    width: auto;
-    margin-left: 30px;
+    margin: 20px;
 }
 
 .text3 h1{
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .text3 p{
-    font-size: 7px;
-}
-
-.text3 a{
     font-size: 8px;
 }
 
-.text3 a:hover{
-    text-decoration: none;
-}
-
-
-.blok{  
-    position: relative;
-    left: 120px;
-    height: 200px;
-    width: 150px;
-    flex-shrink: 0;
-    font-size: 7px;
+.blok{
+    left: 0;
+    margin-top: 20px;
 }
 
 .tea{
-    position: relative;
-    right: 100px;
-    width: 150px;
-    filter: drop-shadow(5px 10px 5px #000000a2);
+    right: 0;
+    width: 180px;
+    margin-top: 20px;
+}
+
+/* ===== SECTION 3 ===== */
+.sec-3{
+    flex-direction: column-reverse;
+    height: auto;
 }
 
 .text4{
-    width: auto;
-    margin-right: 30px;
+    margin: 20px;
 }
 
 .text4 h1{
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .text4 p{
-    font-size: 7px;
-}
-
-.text4 a{
     font-size: 8px;
 }
 
-
-.blok2{  
-    position: relative;
-    left: 40px;
-    height: 200px;
-    width: 150px;
-    flex-shrink: 0;
-    font-size: 7px;
+.blok2{
+    left: 0;
+    margin-top: 20px;
 }
 
 .tea3{
-    position: relative;
-    right: 30px;
-    width: 150px;
-    filter: drop-shadow(5px 10px 5px #000000a2);
+    right: 0;
+    width: 180px;
 }
 
-
+/* ===== NEWSLETTER ===== */
 .sec-4{
-    display: flex;
-    flex-direction: column;
+    padding: 20px 0;
 }
 
 .text5{
-    width: 80%;
-    text-align: center;
+    width: 90%;
 }
 
 .text5 p{
-    font-size: 10px;
-}
-
-.input-email{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    font-size: 9px;
 }
 
 .input-email input{
-    padding: 8px;
-    width: 250px;
+    width: 220px;
 }
 
 .btn-send button{
-    padding: 8px 25px; 
-    top: -10px;
+    top: 0;
 }
 
-
+/* ===== FOOTER ===== */
 footer{
-    font-size: 10px;
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
 }
 
 .last-nav nav{
-    right: 0px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .last-nav nav a{
     font-size: 8px;
-    margin: 5px;
-}
-
-
-.social-media svg{
     margin: 5px;
 }
 
