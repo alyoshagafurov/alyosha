@@ -766,63 +766,91 @@ footer{
     margin: 5px;
 } }
 
+@media (max-width: 480px) {
 
-    @media (max-width: 480px) {
-
-  /* ================= HERO ================= */
-  .group-1 .text{
-    right: -120px;
-    bottom: 60px;
-    line-height: 24px;
+  /* ===== GLOBAL ===== */
+  body{
+    overflow-x: hidden;
   }
 
-  .group-1 .text h1{
-    font-size: 20px;
+  section{
+    padding: 40px 0;
   }
 
-  .group-1 .text p{
-    font-size: 9px;
-    bottom: 0;
+  /* ===== HEADER ===== */
+  header{
+    height: 60px;
   }
 
-  .group-1 .text a{
-    font-size: 9px;
-  }
-
-  .group-1 nav{
-    right: -120px;
-    top: 220px;
-    width: 190px;
-  }
-
-  .group-1 nav a{
-    font-size: 9px;
-  }
-
-  .group-2 img{
-    width: 250px;
-    right: 80px;
-    top: 160px;
-  }
-
-  /* ================= SECTION 1 ================= */
-  .text2{
-    top: 0;
-    margin: 40px;
+  .logo{
     width: auto;
   }
 
-  .text2 h1{
-    font-size: 14px;
+  /* ===== HERO ===== */
+  .sec{
+    flex-direction: column;
+    height: auto;
+    gap: 30px;
   }
 
-  .text2 p{
-    font-size: 8px;
+  .group-1,
+  .group-2{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .group-1 .text{
+    right: 0;
+    bottom: 0;
+    line-height: 24px;
+    text-align: center;
+  }
+
+  .group-1 .text h1{
+    font-size: 22px;
+  }
+
+  .group-1 .text p{
+    font-size: 10px;
+  }
+
+  .group-1 nav{
+    position: static;
+    width: 100%;
+    margin-top: 20px;
+    justify-content: space-around;
+  }
+
+  .group-2{
+    height: 260px;
+  }
+
+  .group-2 img{
+    position: static;
+    width: 240px;
+  }
+
+  /* ===== SECTION 1 ===== */
+  .sec-1{
+    flex-direction: column;
+    height: auto;
+  }
+
+  .text2{
+    width: 90%;
+    margin: 0 auto 30px;
+    top: 0;
+    text-align: center;
+    align-items: center;
   }
 
   .tea-pot{
-    top: 240px;
-    gap: 30px;
+    position: static;
+    width: 100%;
+    padding: 0 20px;
+    gap: 20px;
+    justify-content: flex-start;
   }
 
   .tea-pot span{
@@ -830,142 +858,97 @@ footer{
     padding: 10px;
   }
 
-  .tea-pot span h2{
-    font-size: 11px;
-  }
-
-  .tea-pot span p{
-    font-size: 8px;
-  }
-
   .tea-pot span img{
     width: 90px;
   }
 
   .sec-1 .icons{
-    top: 480px;
-    right: 0;
+    position: static;
+    margin-top: 20px;
     justify-content: center;
-    width: 100%;
   }
 
-  /* ================= SECTION 2 ================= */
+  /* ===== SECTION 2 ===== */
+  .sec-2{
+    flex-direction: column;
+    height: auto;
+    gap: 30px;
+  }
+
   .text3{
-    margin-left: 60px;
-  }
-
-  .text3 h1{
-    font-size: 16px;
-  }
-
-  .text3 p{
-    font-size: 8px;
-  }
-
-  .text3 a{
-    font-size: 9px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .blok{
-    left: 140px;
+    position: static;
     width: 180px;
     height: 220px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-  }
-
-  .blok h1{
-    font-size: 12px;
-  }
-
-  .blok h2{
-    font-size: 9px;
-  }
-
-  .blok p{
-    font-size: 8px;
+    align-items: center;
   }
 
   .tea{
-    right: 120px;
+    position: static;
     width: 180px;
   }
 
-  /* ================= SECTION 3 ================= */
-  .blok2{
-    left: 90px;
-    width: 180px;
-    height: 220px;
-    padding-left: 15px;
-    padding-bottom: 15px;
-  }
-
-  .blok2 h1{
-    font-size: 12px;
-  }
-
-  .blok2 h2{
-    font-size: 9px;
-  }
-
-  .blok2 p{
-    font-size: 8px;
-  }
-
-  .tea3{
-    right: 40px;
-    width: 180px;
+  /* ===== SECTION 3 ===== */
+  .sec-3{
+    flex-direction: column-reverse;
+    height: auto;
+    gap: 30px;
   }
 
   .text4{
-    margin-right: 40px;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
   }
 
-  .text4 h1{
-    font-size: 16px;
+  .blok2{
+    position: static;
+    width: 180px;
+    height: 220px;
+    align-items: center;
   }
 
-  .text4 p{
-    font-size: 8px;
+  .tea3{
+    position: static;
+    width: 180px;
   }
 
-  .text4 a{
-    font-size: 9px;
+  /* ===== NEWSLETTER ===== */
+  .sec-4{
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
   }
 
-  /* ================= NEWSLETTER ================= */
   .text5{
-    width: 70%;
-  }
-
-  .text5 h1{
-    font-size: 18px;
-  }
-
-  .text5 p{
-    font-size: 9px;
+    width: 90%;
+    text-align: center;
   }
 
   .input-email input{
     width: 220px;
-    padding: 8px;
   }
 
   .btn-send button{
-    padding: 8px 20px;
-    top: 0;
-    right: 0;
-    font-size: 10px;
+    position: static;
   }
 
-  /* ================= FOOTER ================= */
+  /* ===== FOOTER ===== */
   footer{
-    font-size: 9px;
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+    padding: 20px 0;
   }
 
-  .last-nav nav a{
-    font-size: 8px;
-    margin: 5px;
+  .last-nav nav{
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
 }
