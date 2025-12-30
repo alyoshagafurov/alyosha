@@ -766,38 +766,12 @@ footer{
     margin: 5px;
 } }
 
-       
-        
-@media (max-width: 480px) {
+        @media (max-width: 480px) {
 
-  /* === масштаб всего сайта === */
-  html {
-    font-size: 95%;
-  }
-
-  body {
-    zoom: 0.85;
-  }
-
-  /* === мелкие точечные правки (НЕ layout) === */
-  .burger{
-    right: 20px;
-  }
-
-  .menu.active{
-    right: 20px;
-  }
-
-  .group-2 img{
-    width: 260px;
-  }
-
-  .tea-pot span img{
-    width: 90px;
-  }
-
-  footer{
-    font-size: 9px;
+  body{
+    transform: scale(0.82);
+    transform-origin: top center;
+    width: 122%;
   }
 
 }
